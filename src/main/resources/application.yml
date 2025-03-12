@@ -1,0 +1,19 @@
+# Información de la aplicación
+application:
+  # Autor de la aplicación
+  author: ${AUTHOR}
+  # Descripción de la aplicación
+  description: ${DESCRIPTION}
+  security:
+    jwt:
+      # Tiempo de expiración del JWT
+      expiration: ${SECURITY_JWT_EXPIRATION}
+      # Clave secreta para la firma del JWT
+      secret-key: ${SECURITY_JWT_SECRET_KEY}
+    public:
+      # Rutas públicas que no requieren autenticación
+      routes: ${SECURITY_PUBLIC_ROUTES}
+  # Título de la aplicación
+  title: ${TITLE}
+  # Versión de la aplicación
+  version: ${VERSION}
