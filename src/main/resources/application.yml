@@ -1,19 +1,45 @@
-# Informaci髇 de la aplicaci髇
+# Informaci锟絥 de la aplicaci锟絥
 application:
-  # Autor de la aplicaci髇
+  # Autor de la aplicaci锟絥
   author: ${AUTHOR}
-  # Descripci髇 de la aplicaci髇
+  # Descripci锟絥 de la aplicaci锟絥
   description: ${DESCRIPTION}
   security:
     jwt:
-      # Tiempo de expiraci髇 del JWT
+      # Tiempo de expiraci锟絥 del JWT
       expiration: ${SECURITY_JWT_EXPIRATION}
       # Clave secreta para la firma del JWT
       secret-key: ${SECURITY_JWT_SECRET_KEY}
     public:
-      # Rutas p鷅licas que no requieren autenticaci髇
+      # Rutas p锟絙licas que no requieren autenticaci锟絥
       routes: ${SECURITY_PUBLIC_ROUTES}
-  # T韙ulo de la aplicaci髇
+  # T锟絫ulo de la aplicaci锟絥
   title: ${TITLE}
-  # Versi髇 de la aplicaci髇
+  # Versi锟絥 de la aplicaci锟絥
   version: ${VERSION}
+
+# Configuraci贸n de Spring
+spring:
+  application:
+    # Nombre de la aplicaci贸n
+    name: ${APP_NAME}
+  data:
+    mongodb:
+      # URI de conexi贸n a MongoDB
+      uri: ${DATA_CONNECTION_METHOD}://${DATA_SOURCE_USERNAME}:${DATA_SOURCE_PASSWORD}@${DATA_SOURCE_DOMAIN}/${DATA_SOURCE_DB}?${DATA_PARAMS}
+    redis:
+      # Configuraci贸n de la base de datos Redis
+      database: ${CACHE_DB}
+      host: ${CACHE_HOST}
+      lettuce:
+        pool:
+          # Configuraci贸n de la conexi贸n en pool para Redis
+          max-active: ${CACHE_LETTUCE_POOL_MAX_ACTIVE}
+          max-idle: ${CACHE_LETTUCE_POOL_MAX_IDLE}
+          max-wait: ${CACHE_LETTUCE_POOL_MAX_WAIT}
+          min-idle: ${CACHE_LETTUCE_POOL_MIN_IDLE}
+      # Configuraci贸n de la autenticaci贸n en Redis
+      password: ${CACHE_PASSWORD}
+      port: ${CACHE_PORT}
+      timeout: ${CACHE_TIMEOUT}
+      username: ${CACHE_USERNAME}
