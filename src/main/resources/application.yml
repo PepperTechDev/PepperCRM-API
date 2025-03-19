@@ -1,21 +1,21 @@
-# Informaci�n de la aplicaci�n
+# Información de la aplicación
 application:
-  # Autor de la aplicaci�n
+  # Autor de la aplicación
   author: ${AUTHOR}
-  # Descripci�n de la aplicaci�n
+  # Descripción de la aplicación
   description: ${DESCRIPTION}
   security:
     jwt:
-      # Tiempo de expiraci�n del JWT
+      # Tiempo de expiración del JWT
       expiration: ${SECURITY_JWT_EXPIRATION}
       # Clave secreta para la firma del JWT
       secret-key: ${SECURITY_JWT_SECRET_KEY}
     public:
-      # Rutas p�blicas que no requieren autenticaci�n
+      # Rutas públicas que no requieren autenticación
       routes: ${SECURITY_PUBLIC_ROUTES}
-  # T�tulo de la aplicaci�n
+  # Título de la aplicación
   title: ${TITLE}
-  # Versi�n de la aplicaci�n
+  # Versión de la aplicación
   version: ${VERSION}
 
 # Configuración del servidor
