@@ -18,6 +18,14 @@ application:
   # Versi�n de la aplicaci�n
   version: ${VERSION}
 
+# Configuración del servidor
+server:
+  # Puerto en el que la aplicación escucha
+  port: ${PORT}
+  tomcat:
+    # Tiempo de espera para las conexiones de Tomcat
+    connection-timeout: ${SERVER_TOMCAT_TIMEOUT}
+
 # Configuración de Spring
 spring:
   application:
