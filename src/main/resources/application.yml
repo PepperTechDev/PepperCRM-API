@@ -43,3 +43,16 @@ spring:
       port: ${CACHE_PORT}
       timeout: ${CACHE_TIMEOUT}
       username: ${CACHE_USERNAME}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    default-model-expand-depth: 1
+    default-model-rendering: example
+    display-operation-id: false
+    display-request-duration: true
+    doc-expansion: list
+    enabled: true
+    path: /
+    url: /v3/api-docs
