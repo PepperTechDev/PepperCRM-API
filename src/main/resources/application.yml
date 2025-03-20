@@ -52,15 +52,25 @@ spring:
       timeout: ${CACHE_TIMEOUT}
       username: ${CACHE_USERNAME}
 
+# Configuración de Swagger/OpenAPI (SpringDoc)
 springdoc:
   api-docs:
+    # Habilitar o deshabilitar la generación de la documentación de la API
     enabled: true
   swagger-ui:
+    # Profundidad de expansión de modelos en Swagger UI
     default-model-expand-depth: 1
+    # Tipo de renderizado de modelos (puede ser 'example', 'model', etc.)
     default-model-rendering: example
+    # Mostrar o no el ID de la operación en la UI
     display-operation-id: false
+    # Mostrar la duración de las solicitudes en la UI de Swagger
     display-request-duration: true
+    # Expansión por defecto en Swagger UI (puede ser 'list', 'full', etc.)
     doc-expansion: list
+    # Habilitar o deshabilitar la UI de Swagger
     enabled: true
+    # Path para acceder a Swagger UI
     path: /
+    # URL donde se encuentra la documentación de la API en formato OpenAPI
     url: /v3/api-docs
