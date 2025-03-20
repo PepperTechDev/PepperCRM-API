@@ -18,6 +18,46 @@ application:
   # Versión de la aplicación
   version: ${VERSION}
 
+# Configuración HTTP
+http:
+  header:
+    cors:
+      # Orígenes permitidos para CORS (Cross-Origin Resource Sharing)
+      allowedOrigins: ${HEADER_CORS_ALLOWED_ORIGINS}
+
+# Configuración de logging
+logging:
+  level:
+    com:
+      # Nivel de log para la biblioteca 'mongodb'
+      mongodb: ${DEBUGGER_MODE}
+    io:
+      # Nivel de log para la biblioteca 'swagger'
+      swagger: ${DEBUGGER_MODE}
+    org:
+      # Niveles de log para diversas bibliotecas dentro de Spring
+      springdoc: ${DEBUGGER_MODE}
+      springframework: ${DEBUGGER_MODE}
+      springframework.data.mongodb: ${DEBUGGER_MODE}
+    root:
+      # Nivel de log para el nivel raíz
+      root: ${DEBUGGER_MODE}
+    smartpot:
+      com:
+        api:
+          Security:
+            jwt: ${DEBUGGER_MODE}  # Nivel de log para JWT en la API de seguridad
+
+# Configuración de limitación de tasa (Rate Limiting)
+rate:
+  limiting:
+    # Número máximo de solicitudes permitidas
+    max-requests: ${RATE_LIMITING_MAX_REQUESTS}
+    # Rutas públicas que estarán sujetas a la limitación de tasa
+    public-routes: ${RATE_LIMITING_PUBLIC_ROUTES}
+    # Ventana de tiempo en la que se aplican las limitaciones
+    time-window: ${RATE_LIMITING_TIME_WINDOW}
+
 # Configuración del servidor
 server:
   # Puerto en el que la aplicación escucha
