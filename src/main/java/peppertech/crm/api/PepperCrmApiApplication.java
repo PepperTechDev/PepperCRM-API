@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "peppertech.crm.api")
 @EnableMongoRepositories(basePackages = "peppertech.crm.api")
 @EnableCaching
 @Slf4j
