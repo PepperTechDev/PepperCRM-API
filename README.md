@@ -2,7 +2,7 @@
 
 ## Deployment
 
-[![CI/CD Pipeline for Deployment](https://github.com/PepperTech/PepperCRM-API/actions/workflows/deployment.yml/badge.svg)](https://github.com/PepperTech/PepperCRM-API/actions/workflows/deployment.yml)
+[![CI/CD Pipeline for Deployment](https://github.com/PepperTechDev/PepperCRM-API/actions/workflows/deployment.yml/badge.svg)](https://github.com/PepperTechDev/PepperCRM-API/actions/workflows/deployment.yml)
 
 ### 1. Compilación de la Aplicación
 
