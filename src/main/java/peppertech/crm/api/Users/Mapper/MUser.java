@@ -3,6 +3,7 @@ package peppertech.crm.api.Users.Mapper;
 import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
 import peppertech.crm.api.Users.Model.Entity.User;
