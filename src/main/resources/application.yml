@@ -91,6 +91,20 @@ spring:
       port: ${CACHE_PORT}
       timeout: ${CACHE_TIMEOUT}
       username: ${CACHE_USERNAME}
+  mail:
+    # Configuración para el servidor de correo
+    host: ${MAIL_HOST}
+    password: ${MAIL_PASSWORD}
+    port: ${MAIL_PORT}
+    properties:
+      mail:
+        smtp:
+          # Configuración de autenticación SMTP
+          auth: ${MAIL_PROPERTIES_SMTP_AUTH}
+          # Habilitar STARTTLS para la conexión segura
+          starttls:
+            enable: ${MAIL_PROPERTIES_SMTP_STARTTLS_ENABLE}
+    username: ${MAIL_USERNAME}
 
 # Configuración de Swagger/OpenAPI (SpringDoc)
 springdoc:
