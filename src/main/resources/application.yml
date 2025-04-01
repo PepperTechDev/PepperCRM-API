@@ -105,6 +105,13 @@ spring:
           starttls:
             enable: ${MAIL_PROPERTIES_SMTP_STARTTLS_ENABLE}
     username: ${MAIL_USERNAME}
+  telegram:
+    # Configuración de Telegram
+    bot:
+      # Token del bot de Telegram, obtenido a través de BotFather
+      token: ${TELEGRAM_BOT_TOKEN}
+      # URL opcional para usar Webhooks en lugar de polling
+      webhook-url: ${TELEGRAM_WEBHOOK_URL}
 
 # Configuración de Swagger/OpenAPI (SpringDoc)
 springdoc:
