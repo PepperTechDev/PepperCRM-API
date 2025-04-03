@@ -108,10 +108,8 @@ spring:
   telegram:
     # Configuración de Telegram
     bot:
-      # Token del bot de Telegram, obtenido a través de BotFather
-      token: ${TELEGRAM_BOT_TOKEN}
-      # URL opcional para usar Webhooks en lugar de polling
-      webhook-url: ${TELEGRAM_WEBHOOK_URL}
+      # URL para manejo de API de Telegram
+      url: https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/
 
 # Configuración de Swagger/OpenAPI (SpringDoc)
 springdoc:
