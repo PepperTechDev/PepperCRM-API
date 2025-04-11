@@ -9,10 +9,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
+import peppertech.crm.api.Mail.Model.Entity.EmailDetails;
 import peppertech.crm.api.Mail.Service.EmailServiceI;
 import peppertech.crm.api.Responses.ErrorResponse;
 
@@ -70,6 +69,25 @@ public class EmailController {
             return new ResponseEntity<>(emailServiceI.getAllMails(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse(e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/send")
+    @Operation(summary = "Enviar y registrar correo",
+            description = "Envía un correo electrónico y lo almacena en la base de datos.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Correo enviado y registrado correctamente.",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = EmailDTO.class))),
+                @ApiResponse(responseCode = "400", description = "Solicitud inválida.",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+                @ApiResponse(responseCode = "500", description = "Error interno al enviar el correo.",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            })
+    public ResponseEntity<?> sendAndSaveMail(@RequestBody EmailDTO emailDetails) {
+        try {
+            return new ResponseEntity<>(emailServiceI.sendSimpleMail(emailDetails), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("Error al enviar el correo: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

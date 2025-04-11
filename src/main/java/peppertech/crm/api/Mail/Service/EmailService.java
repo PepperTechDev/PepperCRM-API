@@ -1,6 +1,8 @@
 package peppertech.crm.api.Mail.Service;
 
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +19,8 @@ import peppertech.crm.api.Mail.Model.Entity.EmailDetails;
 import peppertech.crm.api.Mail.Repository.EmailRepository;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,41 +43,53 @@ public class EmailService implements EmailServiceI {
     }
 
     @Override
-    @Async
-    public void sendSimpleMail(EmailDetails details) {
-        try {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
-            javaMailSender.send(mailMessage);
-            emailRepository.save(details);
-            log.warn("Correo Enviado Exitosamente");
-        } catch (Exception e) {
-            log.error("Error al Enviar Correo " + e.getMessage());
-        }
+    public EmailDTO sendSimpleMail(EmailDTO emailDTO) throws ValidationException {
+        return Optional.of(emailDTO)
+                .map(emailMapper::toEntity)
+                .map( emailDetails -> {
+                    try {
+                        SimpleMailMessage mailMessage = new SimpleMailMessage();
+                        mailMessage.setFrom(sender);
+                        mailMessage.setTo(emailDetails.getRecipient());
+                        mailMessage.setText(emailDetails.getMsgBody());
+                        mailMessage.setSubject(emailDetails.getSubject());
+                        javaMailSender.send(mailMessage);
+                        emailRepository.save(emailDetails);
+                    } catch (Exception e) {
+                        throw new ValidationException("Error al Enviar Correo " + e.getMessage());
+                    }
+                    return emailDetails;
+                })
+                .map(emailRepository::save)
+                .map(emailMapper::toDTO)
+                .orElseThrow(() -> new IllegalStateException("Error al enviar el correo"));
     }
 
     @Override
-    @Async
-    public void sendMailWithAttachment(EmailDetails details) {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper;
-        try {
-            mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-            mimeMessageHelper.setFrom(sender);
-            mimeMessageHelper.setTo(details.getRecipient());
-            mimeMessageHelper.setText(details.getMsgBody());
-            mimeMessageHelper.setSubject(details.getSubject());
-            FileSystemResource file = new FileSystemResource(new File(details.getAttachment()));
-            mimeMessageHelper.addAttachment(Objects.requireNonNull(file.getFilename()), file);
-            javaMailSender.send(mimeMessage);
-            emailRepository.save(details);
-            log.warn("Correo Enviado Exitosamente");
-        } catch (Exception e) {
-            log.error("Error al Enviar Correo " + e.getMessage());
-        }
+    public EmailDTO sendMailWithAttachment(EmailDTO emailDTO) {
+        return Optional.of(emailDTO)
+                .map(emailMapper::toEntity)
+                .map( emailDetails -> {
+                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                    MimeMessageHelper mimeMessageHelper;
+                    try {
+                        mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+                        mimeMessageHelper.setFrom(sender);
+                        mimeMessageHelper.setTo(emailDetails.getRecipient());
+                        mimeMessageHelper.setText(emailDetails.getMsgBody());
+                        mimeMessageHelper.setSubject(emailDetails.getSubject());
+                        FileSystemResource file = new FileSystemResource(new File(emailDetails.getAttachment()));
+                        mimeMessageHelper.addAttachment(Objects.requireNonNull(file.getFilename()), file);
+                        javaMailSender.send(mimeMessage);
+                        emailRepository.save(emailDetails);
+                    } catch (Exception e) {
+                        throw new ValidationException("Error al Enviar Correo " + e.getMessage());
+                    }
+                    return emailDetails;
+                })
+                .map(emailRepository::save)
+                .map(emailMapper::toDTO)
+                .orElseThrow(() -> new IllegalStateException("Error al enviar el correo"));
     }
 
     /**
