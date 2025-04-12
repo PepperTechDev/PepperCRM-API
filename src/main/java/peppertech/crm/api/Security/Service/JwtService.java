@@ -4,12 +4,15 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import peppertech.crm.api.Exceptions.InvalidTokenException;
+import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
+import peppertech.crm.api.Mail.Service.EmailService;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
 import peppertech.crm.api.Users.Service.SUserI;
 
@@ -23,6 +26,8 @@ import java.util.Optional;
 public class JwtService implements JwtServiceI {
 
     private final SUserI serviceUser;
+    private final EmailService emailService;
+
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
     @Value("${application.security.jwt.expiration}")
@@ -34,8 +39,9 @@ public class JwtService implements JwtServiceI {
      * @param serviceUser servicio que maneja las operaciones de base de datos.
      */
     @Autowired
-    public JwtService(SUserI serviceUser) {
+    public JwtService(SUserI serviceUser, EmailService emailService) {
         this.serviceUser = serviceUser;
+        this.emailService = emailService;
     }
 
     @Override
@@ -79,6 +85,30 @@ public class JwtService implements JwtServiceI {
         finalUser.setPassword("");
         return finalUser;
 
+    }
+
+    @Override
+    public String resetPassword(UserDTO reqUser) throws Exception {
+        return Optional.of(serviceUser.getUserByEmail(reqUser.getEmail()))
+                .map(validUser -> {
+                    try {
+                        return serviceUser.UpdateUser(validUser.getId(), validUser);
+                    } catch (Exception e) {
+                        throw new ValidationException(e);
+                    }
+                })
+                .map(validUser -> generateToken(validUser.getId(), validUser.getEmail()))
+                .orElseThrow(() -> new Exception("Credenciales Invalidas"));
+    }
+
+    @Override
+    public EmailDTO forgotPassword(UserDTO reqUser) throws Exception {
+        return Optional.of(serviceUser.getUserByEmail(reqUser.getEmail()))
+                .filter(userDTO -> new BCryptPasswordEncoder().matches(reqUser.getPassword(), userDTO.getPassword()))
+                .map(validUser -> generateToken(validUser.getId(), validUser.getEmail()))
+                .map(token -> new EmailDTO("",reqUser.getEmail(),"Token para recuperar contraseña: "+ token,"Recuperar contraseña","") )
+                .map(emailService::sendSimpleMail)
+                .orElseThrow(() -> new IllegalStateException("Esta cuenta de correo no esta asociada a un usuario"));
     }
 
     private Boolean validateToken(String token, UserDetails userDetails) {
