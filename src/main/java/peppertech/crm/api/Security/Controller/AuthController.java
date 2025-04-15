@@ -10,11 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import peppertech.crm.api.Exceptions.InvalidTokenException;
+import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
 import peppertech.crm.api.Responses.ErrorResponse;
 import peppertech.crm.api.Responses.TokenResponse;
 import peppertech.crm.api.Security.Service.JwtServiceI;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
-import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
 
 @RestController
 @RequestMapping("/auth")
@@ -80,7 +80,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/password/reset")
+    @PutMapping("/password/reset")
     @Operation(
             summary = "Restablecer contraseña",
             description = "Recibe una nueva contraseña y un token de recuperación en los headers (Authorization). Si el token es válido, actualiza la contraseña del usuario.",
@@ -118,7 +118,7 @@ public class AuthController {
                     ),
                     @ApiResponse(
                             description = "Token inválido",
-                            responseCode = "418",
+                            responseCode = "401",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
                     ),
                     @ApiResponse(
