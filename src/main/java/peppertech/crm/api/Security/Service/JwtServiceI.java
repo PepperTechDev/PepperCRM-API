@@ -11,5 +11,5 @@ public interface JwtServiceI {
 
     String resetPassword(UserDTO reqUser) throws Exception;
 
-    EmailDTO forgotPassword(UserDTO reqUser) throws Exception;
+    Boolean forgotPassword(String email) throws Exception;
 }

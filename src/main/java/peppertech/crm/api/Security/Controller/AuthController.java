@@ -63,7 +63,7 @@ public class AuthController {
                     @ApiResponse(
                             description = "Correo enviado con instrucciones para restablecer la contraseña",
                             responseCode = "200",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = EmailDTO.class))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Boolean.class))
                     ),
                     @ApiResponse(
                             description = "Usuario no encontrado o error en el proceso",
@@ -74,7 +74,7 @@ public class AuthController {
     )
     public ResponseEntity<?> forgotPassword(@RequestBody UserDTO reqUser) {
         try {
-            return new ResponseEntity<>(jwtService.forgotPassword(reqUser), HttpStatus.OK);
+            return new ResponseEntity<>(jwtService.forgotPassword(reqUser.getEmail()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse("Error al recuperar contraseña [" + e.getMessage() + "]", HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
