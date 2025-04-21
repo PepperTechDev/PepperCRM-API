@@ -7,7 +7,7 @@ import java.util.List;
  * <p>
  * Esta interfaz define los métodos necesarios para validar los campos de un email, como el destinatario (recipient),
  * el cuerpo del mensaje (msgBody), el asunto (subject) y el archivo adjunto (attachment).
- * Implementada por clases que proporcionan la lógica de validación concreta, como {@link VEmail}.
+ * Implementada por clases que proporcionan la lógica de validación concreta, como {@link EmailValidator}.
  * </p>
  */
 public interface EmailValidatorI {

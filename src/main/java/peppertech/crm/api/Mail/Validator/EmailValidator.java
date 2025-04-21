@@ -1,11 +1,13 @@
 package peppertech.crm.api.Mail.Validator;
 
 import org.bson.types.ObjectId;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+@Component
 public class EmailValidator implements EmailValidatorI{
     private boolean valid;
     private List<String> errors;
