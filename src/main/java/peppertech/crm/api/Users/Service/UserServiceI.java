@@ -14,7 +14,7 @@ import java.util.List;
  * así como realizar búsquedas por diferentes criterios como nombre, apellido,
  * correo electrónico y rol.
  */
-public interface SUserI extends UserDetailsService {
+public interface UserServiceI extends UserDetailsService {
     /**
      * Crea un nuevo usuario en el sistema.
      *

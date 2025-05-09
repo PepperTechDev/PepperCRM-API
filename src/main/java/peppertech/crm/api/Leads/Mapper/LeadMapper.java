@@ -1,27 +1,24 @@
-package peppertech.crm.api.Users.Mapper;
+package peppertech.crm.api.Leads.Mapper;
 
 import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import peppertech.crm.api.Users.Model.DTO.UserDTO;
-import peppertech.crm.api.Users.Model.Entity.User;
+import peppertech.crm.api.Leads.Model.DTO.LeadDTO;
+import peppertech.crm.api.Leads.Model.Entity.Lead;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Mapper(componentModel = "spring")
-public interface MUser {
+public interface LeadMapper {
     @Mapping(source = "id", target = "id", qualifiedByName = "stringToObjectId")
-    @Mapping(source = "password", target = "password", qualifiedByName = "encodePassword")
     @Mapping(source = "createAt", target = "createAt", qualifiedByName = "stringToDate")
-    User toEntity(UserDTO userDTO);
+    Lead toEntity(LeadDTO leadDTO);
 
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
-    @Mapping(source = "password", target = "password", qualifiedByName = "decodePassword")
     @Mapping(source = "createAt", target = "createAt", qualifiedByName = "dateToString")
-    UserDTO toDTO(User user);
+    LeadDTO toDTO(Lead lead);
 
     @org.mapstruct.Named("objectIdToString")
     default String objectIdToString(ObjectId objectId) {
@@ -31,20 +28,6 @@ public interface MUser {
     @org.mapstruct.Named("stringToObjectId")
     default ObjectId stringToObjectId(String id) {
         return id != null ? new ObjectId(id) : null;
-    }
-
-    @org.mapstruct.Named("encodePassword")
-    default String encodePassword(String password) {
-        if (password == null || password.isEmpty()) {
-            return null;
-        }
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(password);
-    }
-
-    @org.mapstruct.Named("decodePassword")
-    default String decodePassword(String encodedPassword) {
-        return encodedPassword;
     }
 
     @org.mapstruct.Named("stringToDate")

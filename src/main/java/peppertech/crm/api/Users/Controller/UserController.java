@@ -15,13 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import peppertech.crm.api.Responses.ErrorResponse;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
-import peppertech.crm.api.Users.Service.SUserI;
+import peppertech.crm.api.Users.Service.UserServiceI;
 
 /**
  * Controlador REST para las operaciones relacionadas con los usuarios.
  * <p>Este controlador proporciona una serie de métodos para gestionar usuarios en el sistema.</p>
  *
- * @see SUserI
+ * @see UserServiceI
  */
 @RestController
 @RequestMapping("/Users")
@@ -35,19 +35,19 @@ public class UserController {
      * ? ¿Qué tipo de error se debe lanzar si el correo electrónico no está válido o es incorrecto (formato de email inválido)?
      */
 
-    private final SUserI serviceUser;
+    private final UserServiceI serviceUser;
 
     /**
      * Constructor del controlador {@link UserController}.
-     * <p>Se utiliza la inyección de dependencias para asignar el servicio {@link SUserI} que gestionará las operaciones
+     * <p>Se utiliza la inyección de dependencias para asignar el servicio {@link UserServiceI} que gestionará las operaciones
      * relacionadas con los usuarios.</p>
      *
      * @param serviceUser El servicio que contiene la lógica de negocio para manejar usuarios.
      * @throws NullPointerException Si el servicio proporcionado es {@code null}.
-     * @see SUserI
+     * @see UserServiceI
      */
     @Autowired
-    public UserController(SUserI serviceUser) {
+    public UserController(UserServiceI serviceUser) {
         this.serviceUser = serviceUser;
     }
 

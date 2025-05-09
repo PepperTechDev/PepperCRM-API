@@ -13,11 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import peppertech.crm.api.Users.Mapper.MUser;
+import peppertech.crm.api.Users.Mapper.UserMapper;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
 import peppertech.crm.api.Users.Model.Entity.UserRole;
-import peppertech.crm.api.Users.Repository.RUser;
-import peppertech.crm.api.Users.Validator.VUserI;
+import peppertech.crm.api.Users.Repository.UserRepository;
+import peppertech.crm.api.Users.Validator.UserValidatorI;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -34,11 +34,11 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @Service
-public class SUser implements SUserI {
+public class UserService implements UserServiceI {
 
-    private final RUser repositoryUser;
-    private final MUser mapperUser;
-    private final VUserI validatorUser;
+    private final UserRepository repositoryUser;
+    private final UserMapper mapperUser;
+    private final UserValidatorI validatorUser;
 
     /**
      * Constructor que inyecta las dependencias del servicio.
@@ -48,7 +48,7 @@ public class SUser implements SUserI {
      * @param validatorUser  validador que valida los datos de usuario.
      */
     @Autowired
-    public SUser(RUser repositoryUser, MUser mapperUser, VUserI validatorUser) {
+    public UserService(UserRepository repositoryUser, UserMapper mapperUser, UserValidatorI validatorUser) {
         this.repositoryUser = repositoryUser;
         this.mapperUser = mapperUser;
         this.validatorUser = validatorUser;

@@ -14,33 +14,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import peppertech.crm.api.Leads.Model.DTO.LeadDTO;
-import peppertech.crm.api.Leads.Service.SLeadI;
+import peppertech.crm.api.Leads.Service.LeadServiceI;
 import peppertech.crm.api.Responses.ErrorResponse;
 
 /**
  * Controlador REST para las operaciones relacionadas con los leads.
  * <p>Este controlador proporciona una serie de métodos para gestionar los leads en el sistema.</p>
  *
- * @see SLeadI
+ * @see LeadServiceI
  */
 @RestController
 @RequestMapping("/Leads")
 @CacheConfig(cacheNames = "leads")
 @Tag(name = "Leads", description = "Operaciones relacionadas con leads")
 public class LeadController {
-    private final SLeadI serviceLead;
+    private final LeadServiceI serviceLead;
 
     /**
      * Constructor del controlador {@link LeadController}.
-     * <p>Se utiliza la inyección de dependencias para asignar el servicio {@link SLeadI} que gestionará las operaciones
+     * <p>Se utiliza la inyección de dependencias para asignar el servicio {@link LeadServiceI} que gestionará las operaciones
      * relacionadas con los leads.</p>
      *
      * @param serviceLead El servicio que contiene la lógica de negocio para manejar los leads.
      * @throws NullPointerException Si el servicio proporcionado es {@code null}.
-     * @see SLeadI
+     * @see LeadServiceI
      */
     @Autowired
-    public LeadController(SLeadI serviceLead) {
+    public LeadController(LeadServiceI serviceLead) {
         this.serviceLead = serviceLead;
     }
 

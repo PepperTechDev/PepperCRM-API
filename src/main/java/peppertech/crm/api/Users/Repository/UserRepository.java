@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @Repository
-public interface RUser extends MongoRepository<User, ObjectId> {
+public interface UserRepository extends MongoRepository<User, ObjectId> {
 
     /**
      * Busca una lista de usuarios cuyo nombre coincida con el patrón proporcionado,
