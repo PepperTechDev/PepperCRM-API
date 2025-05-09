@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication(scanBasePackages = "peppertech.crm.api")
 @EnableMongoRepositories(basePackages = "peppertech.crm.api")
@@ -16,6 +18,11 @@ public class PepperCrmApiApplication {
     public static void main(String[] args) {
         loadEnv();
         SpringApplication.run(PepperCrmApiApplication.class, args);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     private static void loadEnv() {
