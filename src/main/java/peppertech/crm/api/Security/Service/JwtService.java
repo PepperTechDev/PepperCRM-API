@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,13 @@ public class JwtService implements JwtServiceI {
                 .map(validUser -> generateToken(validUser.getId(), validUser.getEmail()))
                 .orElseThrow(() -> new Exception("Credenciales Invalidas"));
 
+    }
+
+    @Override
+    public String Register(UserDTO reqUser) throws Exception {
+        return Optional.ofNullable(serviceUser.CreateUser(reqUser))
+                .map(user -> generateToken(reqUser.getId(), user.getEmail()))
+                .orElseThrow(() -> new Exception("Usuario ya registrado"));
     }
 
 
