@@ -83,7 +83,7 @@ public class SUser implements SUserI {
      */
     @Override
     @Transactional
-    @CachePut(value = "users", key = "#userDTO.id")
+    @CachePut(value = "users", key = "#userDTO.email")
     public UserDTO CreateUser(UserDTO userDTO) throws ValidationException, IllegalStateException {
         return Optional.of(userDTO)
                 .filter(dto -> !repositoryUser.existsByEmail(dto.getEmail()))
