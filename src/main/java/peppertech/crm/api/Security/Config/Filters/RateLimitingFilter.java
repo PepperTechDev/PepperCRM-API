@@ -61,7 +61,7 @@ public class RateLimitingFilter implements Filter {
 
         if (currentCount >= MAX_REQUESTS) {
             ((HttpServletResponse) response).setStatus(429);  // Too Many Requests
-            response.getWriter().write("Haz enviado demasiadas solicitudes, intenta de nuevo más tarde");
+            response.getWriter().write("You have made too many requests. Please try again later.");
             return;
         }
 

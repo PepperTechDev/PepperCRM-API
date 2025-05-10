@@ -50,7 +50,7 @@ public class AuthController {
         try {
             return new ResponseEntity<>(new TokenResponse(jwtService.Login(reqUser)), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al iniciar sesion [" + e.getMessage() + "]", HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error logging in: " + e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -76,7 +76,7 @@ public class AuthController {
             return new ResponseEntity<>(new TokenResponse(jwtService.Register(reqUser)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new ErrorResponse("Error al registrar usuario [" + e.getMessage() + "]", HttpStatus.BAD_REQUEST.value()),
+                    new ErrorResponse("Error registering user: " + e.getMessage(), HttpStatus.BAD_REQUEST.value()),
                     HttpStatus.BAD_REQUEST
             );
         }
@@ -104,7 +104,7 @@ public class AuthController {
         try {
             return new ResponseEntity<>(jwtService.forgotPassword(reqUser.getEmail()), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al recuperar contraseña [" + e.getMessage() + "]", HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error recovering password: " + e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -129,7 +129,7 @@ public class AuthController {
         try {
             return new ResponseEntity<>(new TokenResponse(jwtService.resetPassword(reqUser)), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al restablecer contraseña [" + e.getMessage() + "]", HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error resetting password: " + e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -160,9 +160,9 @@ public class AuthController {
         try {
             return new ResponseEntity<>(jwtService.validateAuthHeader(authHeader), HttpStatus.OK);
         } catch (InvalidTokenException e) {
-            return new ResponseEntity<>(new ErrorResponse("Token Invalido [" + e.getMessage() + "]", HttpStatus.I_AM_A_TEAPOT.value()), HttpStatus.I_AM_A_TEAPOT);
+            return new ResponseEntity<>(new ErrorResponse("Invalid token: " + e.getMessage(), HttpStatus.I_AM_A_TEAPOT.value()), HttpStatus.I_AM_A_TEAPOT);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al verificar token [" + e.getMessage() + "]", HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ErrorResponse("Error verifying token: " + e.getMessage(), HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
 
     }

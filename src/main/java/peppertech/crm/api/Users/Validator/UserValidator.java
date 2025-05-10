@@ -78,10 +78,10 @@ public class UserValidator implements UserValidatorI {
     @Override
     public void validateId(String id) {
         if (id == null || id.isEmpty()) {
-            errors.add("El Id no puede estar vacío");
+            errors.add("The ID cannot be empty");
             valid = false;
         } else if (!ObjectId.isValid(id)) {
-            errors.add("El Id debe ser un hexadecimal de 24 caracteres");
+            errors.add("The ID must be a 24-character hexadecimal string");
             valid = false;
         }
     }
@@ -107,7 +107,7 @@ public class UserValidator implements UserValidatorI {
     public void validateName(String name) {
         if (name == null || !Pattern.matches(NAME_PATTERN, name)) {
             valid = false;
-            errors.add("El nombre debe tener entre 4 y 15 caracteres y solo letras");
+            errors.add("The first name must have between 4 and 15 characters and contain only letters");
         }
     }
 
@@ -123,7 +123,7 @@ public class UserValidator implements UserValidatorI {
     public void validateLastname(String lastname) {
         if (lastname == null || !Pattern.matches(LASTNAME_PATTERN, lastname)) {
             valid = false;
-            errors.add("El apellido debe tener entre 4 y 30 caracteres");
+            errors.add("The last name must have between 4 and 30 characters");
         }
     }
 
@@ -139,7 +139,7 @@ public class UserValidator implements UserValidatorI {
     public void validateEmail(String email) {
         if (email == null || !Pattern.matches(EMAIL_PATTERN, email)) {
             valid = false;
-            errors.add("El correo electrónico no es válido");
+            errors.add("The email is not valid");
         }
     }
 
@@ -155,7 +155,7 @@ public class UserValidator implements UserValidatorI {
     public void validatePassword(String password) {
         if (password == null || !Pattern.matches(PASSWORD_PATTERN, password)) {
             valid = false;
-            errors.add("La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial");
+            errors.add("The password must have at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character");
         }
     }
 
@@ -170,7 +170,7 @@ public class UserValidator implements UserValidatorI {
     @Override
     public void validateRole(String role) {
         if (role == null || role.isEmpty()) {
-            errors.add("El rol no puede estar vacío");
+            errors.add("The role cannot be empty");
             valid = false;
             return;
         }
@@ -179,7 +179,7 @@ public class UserValidator implements UserValidatorI {
                 .map(Enum::name).collect(Collectors.toSet());
 
         if (!validRoles.contains(role)) {
-            errors.add("El Rol debe ser uno de los siguientes: " + String.join(", ", validRoles));
+            errors.add("The role must be one of the following: " + String.join(", ", validRoles));
             valid = false;
         }
     }
