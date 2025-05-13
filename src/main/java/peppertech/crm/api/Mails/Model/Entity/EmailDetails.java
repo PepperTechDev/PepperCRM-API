@@ -1,4 +1,4 @@
-package peppertech.crm.api.Mail.Model.Entity;
+package peppertech.crm.api.Mails.Model.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

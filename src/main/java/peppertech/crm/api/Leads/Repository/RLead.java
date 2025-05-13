@@ -1,4 +1,4 @@
-package peppertech.crm.api.Leads.Repositoy;
+package peppertech.crm.api.Leads.Repository;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;

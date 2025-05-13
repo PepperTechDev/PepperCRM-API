@@ -1,4 +1,4 @@
-package peppertech.crm.api.Mail.Model.DTO;
+package peppertech.crm.api.Mails.Model.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

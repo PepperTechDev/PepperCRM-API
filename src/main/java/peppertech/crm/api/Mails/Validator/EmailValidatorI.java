@@ -1,4 +1,4 @@
-package peppertech.crm.api.Mail.Validator;
+package peppertech.crm.api.Mails.Validator;
 
 import java.util.List;
 

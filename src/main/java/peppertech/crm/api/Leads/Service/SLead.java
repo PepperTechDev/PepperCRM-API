@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import peppertech.crm.api.Leads.Mapper.MLead;
 import peppertech.crm.api.Leads.Model.DTO.LeadDTO;
-import peppertech.crm.api.Leads.Repositoy.RLead;
+import peppertech.crm.api.Leads.Repository.RLead;
 import peppertech.crm.api.Leads.Validator.VLeadI;
 
 import java.text.SimpleDateFormat;

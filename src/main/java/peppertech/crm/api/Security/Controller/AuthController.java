@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import peppertech.crm.api.Exceptions.InvalidTokenException;
-import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
 import peppertech.crm.api.Responses.ErrorResponse;
 import peppertech.crm.api.Responses.TokenResponse;
 import peppertech.crm.api.Security.Service.JwtServiceI;

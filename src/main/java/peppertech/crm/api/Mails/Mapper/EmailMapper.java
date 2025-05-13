@@ -1,10 +1,10 @@
-package peppertech.crm.api.Mail.Mapper;
+package peppertech.crm.api.Mails.Mapper;
 
 import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
-import peppertech.crm.api.Mail.Model.Entity.EmailDetails;
+import peppertech.crm.api.Mails.Model.DTO.EmailDTO;
+import peppertech.crm.api.Mails.Model.Entity.EmailDetails;
 
 @Mapper(componentModel = "spring")
 public interface EmailMapper {

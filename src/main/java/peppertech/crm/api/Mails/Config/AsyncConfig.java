@@ -1,4 +1,4 @@
-package peppertech.crm.api.Mail.Config;
+package peppertech.crm.api.Mails.Config;
 
 import jakarta.annotation.PreDestroy;
 import org.springframework.context.annotation.Bean;
