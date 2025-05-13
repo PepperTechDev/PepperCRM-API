@@ -7,7 +7,6 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -105,7 +104,7 @@ public class JwtService implements JwtServiceI {
                     try {
                         return serviceUser.UpdateUser(validUser.getId(), validUser);
                     } catch (Exception e) {
-                        throw new ValidationException("Failed to update user."+e.getMessage());
+                        throw new ValidationException("Failed to update user." + e.getMessage());
                     }
                 })
                 .map(validUser -> generateToken(validUser.getId(), validUser.getEmail()))
@@ -116,7 +115,7 @@ public class JwtService implements JwtServiceI {
     public Boolean forgotPassword(String email) throws Exception {
         return Optional.of(serviceUser.getUserByEmail(email))
                 .map(validUser -> generateToken(validUser.getId(), validUser.getEmail()))
-                .map(token -> new EmailDTO(null,email,"Password recovery token: " + token, "Password Recovery", "") )
+                .map(token -> new EmailDTO(null, email, "Password recovery token: " + token, "Password Recovery", ""))
                 .map(emailService::sendSimpleMail)
                 .map(ValidDTO -> {
                     emailValidator.validateId(ValidDTO.getId());

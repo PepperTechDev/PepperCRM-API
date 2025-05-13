@@ -20,11 +20,6 @@ public class PepperCrmApiApplication {
         SpringApplication.run(PepperCrmApiApplication.class, args);
     }
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
     private static void loadEnv() {
         try {
             Dotenv dotenv = Dotenv.load();
@@ -41,5 +36,10 @@ public class PepperCrmApiApplication {
             log.warn("No se pudo cargar el archivo .env. Se continuará con las variables de entorno ya presentes.");
             log.debug("Detalles del error: ", e);
         }
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

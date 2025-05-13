@@ -168,7 +168,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(serviceUser.getUserById(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("An error occurred while retrieving the user with ID '" + id + "'." +  e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while retrieving the user with ID '" + id + "'." + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 
