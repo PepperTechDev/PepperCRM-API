@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import peppertech.crm.api.Responses.DeleteResponse;
 import peppertech.crm.api.Responses.ErrorResponse;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
 import peppertech.crm.api.Users.Service.UserServiceI;
@@ -207,6 +208,243 @@ public class UserController {
             return new ResponseEntity<>(serviceUser.getUserByEmail(email), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse("An error occurred while retrieving the user with email '" + email + "'." + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Busca todos los usuarios cuyo nombre coincida con el proporcionado.
+     * <p>Este método recupera una lista de usuarios que coinciden con el nombre proporcionado. Puede ser el primer nombre o cualquier parte del nombre del usuario.</p>
+     * <p>Si no se encuentran usuarios con el nombre proporcionado, se devolverá una lista vacía con el código HTTP 200.</p>
+     *
+     * @param name El nombre del usuario a buscar. Este parámetro puede ser el primer nombre o cualquier parte del nombre completo del usuario.
+     *             El nombre es obligatorio para realizar la búsqueda.
+     * @return Un objeto {@link ResponseEntity} que contiene:
+     *         <ul>
+     *           <li>Una lista de objetos {@link UserDTO} con los usuarios que coinciden con el nombre proporcionado (código HTTP 200).</li>
+     *           <li>Un mensaje de error si no se encuentran usuarios con el nombre proporcionado (código HTTP 404).</li>
+     *         </ul>
+     *
+     * <p><b>Respuestas posibles:</b></p>
+     * <ul>
+     *   <li><b>200 OK</b>: Si se encuentran usuarios con el nombre proporcionado, se retorna una lista de objetos {@link UserDTO} con la información de los usuarios.<br></li>
+     *   <li><b>404 Not Found</b>: Si no se encuentran usuarios con el nombre proporcionado, se retorna un objeto {@link ErrorResponse} con un mensaje de error.<br></li>
+     * </ul>
+     */
+    @GetMapping("/name/{name}")
+    @Operation(summary = "Buscar usuarios por nombre",
+            description = "Recupera usuarios cuyo nombre coincide con el proporcionado. "
+                    + "Si no se encuentran usuarios, se devolverá una lista vacía.",
+            responses = {
+                    @ApiResponse(description = "Usuarios encontrados",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = UserDTO.class)))),
+                    @ApiResponse(responseCode = "404",
+                            description = "No se encontraron usuarios con el nombre proporcionado.",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            })
+    public ResponseEntity<?> getUsersByName(@Parameter(description = "Nombre del usuario a buscar.", required = true) @PathVariable String name) {
+        try {
+            return new ResponseEntity<>(serviceUser.getUsersByName(name), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("Error al buscar el usuario con nombre '" + name + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Busca todos los usuarios cuyo apellido coincida con el proporcionado.
+     * <p>Este método recupera una lista de usuarios que coinciden con el apellido proporcionado. Puede ser el apellido completo o parte de él.</p>
+     * <p>Si no se encuentran usuarios con el apellido proporcionado, se devolverá una lista vacía con el código HTTP 200.</p>
+     *
+     * @param lastname El apellido del usuario a buscar. Este parámetro puede ser el apellido completo o parte de él.
+     *                 El apellido es obligatorio para realizar la búsqueda.
+     * @return Un objeto {@link ResponseEntity} que contiene:
+     *         <ul>
+     *           <li>Una lista de objetos {@link UserDTO} con los usuarios cuyo apellido coincide con el proporcionado (código HTTP 200).</li>
+     *           <li>Un mensaje de error si no se encuentran usuarios con el apellido proporcionado (código HTTP 404).</li>
+     *         </ul>
+     *
+     * <p><b>Respuestas posibles:</b></p>
+     * <ul>
+     *   <li><b>200 OK</b>: Si se encuentran usuarios con el apellido proporcionado, se retorna una lista de objetos {@link UserDTO} con la información de los usuarios.<br></li>
+     *   <li><b>404 Not Found</b>: Si no se encuentran usuarios con el apellido proporcionado, se retorna un objeto {@link ErrorResponse} con un mensaje de error.<br></li>
+     * </ul>
+     */
+    @GetMapping("/lastname/{lastname}")
+    @Operation(summary = "Buscar usuarios por apellido",
+            description = "Recupera usuarios cuyo apellido coincide con el proporcionado. "
+                    + "Si no se encuentran usuarios, se devolverá una lista vacía.",
+            responses = {
+                    @ApiResponse(description = "Usuarios encontrados",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = UserDTO.class)))),
+                    @ApiResponse(responseCode = "404",
+                            description = "No se encontraron usuarios con el apellido proporcionado.",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            })
+    public ResponseEntity<?> getUsersByLastname(@Parameter(description = "Apellido del usuario a buscar", required = true) @PathVariable String lastname) {
+        try {
+            return new ResponseEntity<>(serviceUser.getUsersByLastname(lastname), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("Error al buscar el usuario con apellido '" + lastname + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Busca todos los usuarios que tengan el rol especificado.
+     * <p>Este método recupera una lista de usuarios que tienen el rol proporcionado. El rol debe coincidir exactamente con el rol de los usuarios.</p>
+     * <p>Si no se encuentran usuarios con el rol proporcionado, se devolverá una lista vacía con el código HTTP 200.</p>
+     *
+     * @param role El rol que se desea buscar. Este parámetro debe coincidir exactamente con el rol de los usuarios en el sistema.
+     * @return Un objeto {@link ResponseEntity} que contiene:
+     *         <ul>
+     *           <li>Una lista de objetos {@link UserDTO} con los usuarios que tienen el rol especificado (código HTTP 200).</li>
+     *           <li>Un mensaje de error si no se encuentran usuarios con el rol especificado (código HTTP 404).</li>
+     *         </ul>
+     *
+     * <p><b>Respuestas posibles:</b></p>
+     * <ul>
+     *   <li><b>200 OK</b>: Si se encuentran usuarios con el rol proporcionado, se retorna una lista de objetos {@link UserDTO} con la información de los usuarios.<br></li>
+     *   <li><b>404 Not Found</b>: Si no se encuentran usuarios con el rol proporcionado, se retorna un objeto {@link ErrorResponse} con un mensaje de error.<br></li>
+     * </ul>
+     */
+    @GetMapping("/role/{role}")
+    @Operation(summary = "Buscar usuarios por rol",
+            description = "Recupera usuarios cuyo rol coincide con el proporcionado. "
+                    + "Si no se encuentran usuarios, se devolverá una lista vacía.",
+            responses = {
+                    @ApiResponse(description = "Usuarios encontrados",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = UserDTO.class)))),
+                    @ApiResponse(responseCode = "404",
+                            description = "No se encontraron usuarios con el rol proporcionado.",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            })
+    public ResponseEntity<?> getUsersByRole(@Parameter(description = "Rol del usuario a buscar", required = true) @PathVariable String role) {
+        try {
+            return new ResponseEntity<>(serviceUser.getUsersByRole(role), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("Error al buscar el usuario con rol '" + role + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Recupera todos los roles de usuario registrados en el sistema.
+     * <p>Este método obtiene una lista de todos los roles de usuario disponibles en el sistema. Si no se encuentran roles,
+     * se devolverá una lista vacía con el código HTTP 200.</p>
+     *
+     * @return Un objeto {@link ResponseEntity} que contiene:
+     *         <ul>
+     *           <li>Una lista de cadenas {@link String} con los roles de usuario (código HTTP 200).</li>
+     *           <li>Un mensaje de error si ocurre un problema al obtener los roles o no se encuentran roles registrados (código HTTP 404).</li>
+     *         </ul>
+     *
+     * <p><b>Respuestas posibles:</b></p>
+     * <ul>
+     *   <li><b>200 OK</b>: Si se encuentran roles registrados, se retorna una lista de cadenas con los nombres de los roles en formato JSON.<br></li>
+     *   <li><b>404 Not Found</b>: Si no se encuentran roles o ocurre un error al obtenerlos, se retorna un objeto {@link ErrorResponse} con un mensaje de error.<br></li>
+     * </ul>
+     */
+    @GetMapping("/role/All")
+    @Operation(summary = "Obtener todos los roles de usuario",
+            description = "Recupera todos los roles de usuario registrados en el sistema. "
+                    + "En caso de no haber roles de usuario, se devolverá una excepción.",
+            responses = {
+                    @ApiResponse(description = "Roles encontrados",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json",
+                                    array = @ArraySchema(schema = @Schema(implementation = String.class)))),
+                    @ApiResponse(responseCode = "404",
+                            description = "No se encontraron roles registrados.",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            })
+    public ResponseEntity<?> getAllRoles() {
+        try {
+            return new ResponseEntity<>(serviceUser.getAllRoles(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("Error al buscar los roles [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Actualiza la información de un usuario existente.
+     * <p>Este método recibe un ID de usuario y un objeto {@link UserDTO} con los datos actualizados.
+     * Si el usuario con el ID proporcionado existe, sus datos se actualizan con la información proporcionada.</p>
+     * <p>Si el usuario no existe o si ocurre algún error durante el proceso de actualización, se devuelve un mensaje de error con el código HTTP 404.</p>
+     *
+     * @param id          El identificador único del usuario que se desea actualizar. Este parámetro debe ser el ID del usuario a modificar.
+     * @param updatedUser El objeto {@link UserDTO} que contiene la nueva información del usuario a actualizar.
+     * @return Un objeto {@link ResponseEntity} con:
+     *         <ul>
+     *           <li>El usuario actualizado con el código HTTP 200 si la actualización es exitosa.</li>
+     *           <li>Un mensaje de error con el código HTTP 404 si no se encuentra el usuario o si ocurre un error.</li>
+     *         </ul>
+     *
+     * <p><b>Respuestas posibles:</b></p>
+     * <ul>
+     *   <li><b>200 OK</b>: El usuario fue actualizado correctamente y se retorna un objeto {@link UserDTO} con los datos actualizados del usuario.<br></li>
+     *   <li><b>404 Not Found</b>: No se pudo actualizar el usuario. El usuario puede no existir o los datos pueden ser incorrectos.<br></li>
+     * </ul>
+     */
+    @PutMapping("/Update/{id}")
+    @Operation(summary = "Actualizar un usuario",
+            description = "Actualiza los datos de un usuario existente utilizando su ID. "
+                    + "Si el usuario no existe o hay un error, se devolverá un error con código HTTP 404.",
+            responses = {
+                    @ApiResponse(description = "Usuario actualizado",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "No se pudo actualizar el usuario. El usuario puede no existir o los datos pueden ser incorrectos.",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            })
+    public ResponseEntity<?> updateUser(
+            @Parameter(description = "ID único del usuario que se desea actualizar.", required = true) @PathVariable String id,
+            @Parameter(description = "Datos actualizados del usuario.") @RequestBody UserDTO updatedUser) {
+        try {
+            return new ResponseEntity<>(serviceUser.UpdateUser(id, updatedUser), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("Error al actualizar el usuario con id '" + id + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Elimina un usuario existente por su ID.
+     * <p>Este método permite eliminar a un usuario de la base de datos utilizando su ID único.
+     * Si el usuario no se encuentra o si ocurre un error durante la eliminación, se devolverá un mensaje de error con el código HTTP 404.</p>
+     *
+     * @param id El identificador único del usuario que se desea eliminar. Este parámetro debe ser el ID del usuario a eliminar.
+     * @return Un objeto {@link ResponseEntity} con:
+     *         <ul>
+     *           <li>Un mensaje indicando el éxito de la eliminación con el código HTTP 200.</li>
+     *           <li>Un mensaje de error si no se pudo eliminar el usuario, con el código HTTP 404.</li>
+     *         </ul>
+     *
+     * <p><b>Respuestas posibles:</b></p>
+     * <ul>
+     *   <li><b>200 OK</b>: El usuario fue eliminado exitosamente.<br></li>
+     *   <li><b>404 Not Found</b>: No se encontró el usuario con el ID proporcionado o hubo un error al eliminarlo.<br></li>
+     * </ul>
+     */
+    @DeleteMapping("/Delete/{id}")
+    @Operation(summary = "Eliminar un usuario",
+            description = "Elimina un usuario existente utilizando su ID. "
+                    + "Si el usuario no existe o hay un error, se devolverá un error con código HTTP 404.",
+            responses = {
+                    @ApiResponse(description = "Usuario eliminado",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = DeleteResponse.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "No se pudo eliminar el usuario.",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            })
+    public ResponseEntity<?> deleteUser(@Parameter(description = "ID único del usuario que se desea eliminar.", required = true) @PathVariable String id) {
+        try {
+            return new ResponseEntity<>(new DeleteResponse("Se ha eliminado un recurso [" + serviceUser.DeleteUser(id) + "]"), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("Error al eliminar el usuario con id '" + id + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 }
