@@ -247,7 +247,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(serviceUser.getUsersByName(name), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al buscar el usuario con nombre '" + name + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while searching for users with name '" + name + "'. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -287,7 +287,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(serviceUser.getUsersByLastname(lastname), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al buscar el usuario con apellido '" + lastname + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while searching for users with last name '" + lastname + "'. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -326,7 +326,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(serviceUser.getUsersByRole(role), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al buscar el usuario con rol '" + role + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while searching for users with role '" + role + "'. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -364,7 +364,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(serviceUser.getAllRoles(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al buscar los roles [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while retrieving the roles. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -406,7 +406,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(serviceUser.UpdateUser(id, updatedUser), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al actualizar el usuario con id '" + id + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while updating the user with ID '" + id + "'. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -442,9 +442,10 @@ public class UserController {
             })
     public ResponseEntity<?> deleteUser(@Parameter(description = "ID único del usuario que se desea eliminar.", required = true) @PathVariable String id) {
         try {
-            return new ResponseEntity<>(new DeleteResponse("Se ha eliminado un recurso [" + serviceUser.DeleteUser(id) + "]"), HttpStatus.OK);
+            String result = serviceUser.DeleteUser(id);
+            return new ResponseEntity<>(new DeleteResponse("User with ID '" + id + "' was successfully deleted. " + result), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al eliminar el usuario con id '" + id + "' [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("Failed to delete user with ID '" + id + "'. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 }
