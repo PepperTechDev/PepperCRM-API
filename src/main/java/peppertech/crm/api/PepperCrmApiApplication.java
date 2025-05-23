@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication(scanBasePackages = "peppertech.crm.api")
 @EnableMongoRepositories(basePackages = "peppertech.crm.api")
@@ -34,5 +36,10 @@ public class PepperCrmApiApplication {
             log.warn("No se pudo cargar el archivo .env. Se continuará con las variables de entorno ya presentes.");
             log.debug("Detalles del error: ", e);
         }
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

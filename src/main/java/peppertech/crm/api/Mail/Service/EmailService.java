@@ -11,16 +11,12 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import peppertech.crm.api.Mail.Mapper.EmailMapper;
 import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
-import peppertech.crm.api.Mail.Model.Entity.EmailDetails;
 import peppertech.crm.api.Mail.Repository.EmailRepository;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -44,10 +40,10 @@ public class EmailService implements EmailServiceI {
 
     @Override
     public EmailDTO sendSimpleMail(EmailDTO emailDTO) throws ValidationException {
-        return Optional.of(emailDTO)
-                .map(emailMapper::toEntity)
-                .map( emailDetails -> {
-                    try {
+        try {
+            return Optional.of(emailDTO)
+                    .map(emailMapper::toEntity)
+                    .map(emailDetails -> {
                         SimpleMailMessage mailMessage = new SimpleMailMessage();
                         mailMessage.setFrom(sender);
                         mailMessage.setTo(emailDetails.getRecipient());
@@ -55,41 +51,46 @@ public class EmailService implements EmailServiceI {
                         mailMessage.setSubject(emailDetails.getSubject());
                         javaMailSender.send(mailMessage);
                         emailRepository.save(emailDetails);
-                    } catch (Exception e) {
-                        throw new ValidationException("Error al Enviar Correo " + e.getMessage());
-                    }
-                    return emailDetails;
-                })
-                .map(emailRepository::save)
-                .map(emailMapper::toDTO)
-                .orElseThrow(() -> new IllegalStateException("Error al enviar el correo"));
+                        return emailDetails;
+                    })
+                    .map(emailMapper::toDTO)
+                    .orElseThrow(() -> new ValidationException("Failed to map email details"));
+        } catch (Exception e) {
+            log.error("Error sending email to {}: {}", emailDTO.getRecipient(), e.getMessage(), e);
+            throw new ValidationException("Error sending email: " + e.getMessage());
+        }
     }
 
     @Override
-    public EmailDTO sendMailWithAttachment(EmailDTO emailDTO) {
-        return Optional.of(emailDTO)
-                .map(emailMapper::toEntity)
-                .map( emailDetails -> {
-                    MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-                    MimeMessageHelper mimeMessageHelper;
-                    try {
-                        mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-                        mimeMessageHelper.setFrom(sender);
-                        mimeMessageHelper.setTo(emailDetails.getRecipient());
-                        mimeMessageHelper.setText(emailDetails.getMsgBody());
-                        mimeMessageHelper.setSubject(emailDetails.getSubject());
-                        FileSystemResource file = new FileSystemResource(new File(emailDetails.getAttachment()));
-                        mimeMessageHelper.addAttachment(Objects.requireNonNull(file.getFilename()), file);
-                        javaMailSender.send(mimeMessage);
-                        emailRepository.save(emailDetails);
-                    } catch (Exception e) {
-                        throw new ValidationException("Error al Enviar Correo " + e.getMessage());
-                    }
-                    return emailDetails;
-                })
-                .map(emailRepository::save)
-                .map(emailMapper::toDTO)
-                .orElseThrow(() -> new IllegalStateException("Error al enviar el correo"));
+    public EmailDTO sendMailWithAttachment(EmailDTO emailDTO) throws ValidationException {
+        try {
+            return Optional.of(emailDTO)
+                    .map(emailMapper::toEntity)
+                    .map(emailDetails -> {
+                        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                        MimeMessageHelper mimeMessageHelper;
+                        try {
+                            mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+                            mimeMessageHelper.setFrom(sender);
+                            mimeMessageHelper.setTo(emailDetails.getRecipient());
+                            mimeMessageHelper.setText(emailDetails.getMsgBody());
+                            mimeMessageHelper.setSubject(emailDetails.getSubject());
+                            FileSystemResource file = new FileSystemResource(new File(emailDetails.getAttachment()));
+                            mimeMessageHelper.addAttachment(Objects.requireNonNull(file.getFilename()), file);
+                            javaMailSender.send(mimeMessage);
+                            emailRepository.save(emailDetails);
+                        } catch (MessagingException e) {
+                            log.error("Error sending email with attachment to {}: {}", emailDetails.getRecipient(), e.getMessage(), e);
+                            throw new ValidationException("Error sending email with attachment: " + e.getMessage());
+                        }
+                        return emailDetails;
+                    })
+                    .map(emailMapper::toDTO)
+                    .orElseThrow(() -> new ValidationException("Failed to map email details"));
+        } catch (Exception e) {
+            log.error("Error sending email with attachment: {}", e.getMessage(), e);
+            throw new ValidationException("Error sending email with attachment: " + e.getMessage());
+        }
     }
 
     /**
@@ -100,19 +101,24 @@ public class EmailService implements EmailServiceI {
      * {@link EmailDTO} utilizando el convertidor {@link EmailMapper}.</p>
      *
      * @return Una lista de objetos {@link EmailDTO} que representan todos los correos en la base de datos.
-     * @throws Exception Si no existen correos registrados en la base de datos.
+     * @throws ValidationException Si no existen correos registrados en la base de datos.
      * @see EmailDTO
      * @see EmailRepository
      * @see EmailMapper
      */
     @Override
     @Cacheable(value = "mails", key = "'all_mails'")
-    public List<EmailDTO> getAllMails() throws Exception {
-        return Optional.of(emailRepository.findAll())
-                .filter(emails -> !emails.isEmpty())
-                .map(emails -> emails.stream()
-                        .map(emailMapper::toDTO)
-                        .collect(Collectors.toList()))
-                .orElseThrow(() -> new Exception("No existe ningún correo"));
+    public List<EmailDTO> getAllMails() throws ValidationException {
+        try {
+            return Optional.of(emailRepository.findAll())
+                    .filter(emails -> !emails.isEmpty())
+                    .map(emails -> emails.stream()
+                            .map(emailMapper::toDTO)
+                            .collect(Collectors.toList()))
+                    .orElseThrow(() -> new ValidationException("No emails found in the database"));
+        } catch (Exception e) {
+            log.error("Error fetching all emails: {}", e.getMessage(), e);
+            throw new ValidationException("Error fetching all emails: " + e.getMessage());
+        }
     }
 }

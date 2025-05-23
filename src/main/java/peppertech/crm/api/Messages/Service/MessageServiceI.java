@@ -1,5 +1,5 @@
 package peppertech.crm.api.Messages.Service;
 
 public interface MessageServiceI {
-   void sendMessage(String chatId, String message);
+    void sendMessage(String chatId, String message);
 }

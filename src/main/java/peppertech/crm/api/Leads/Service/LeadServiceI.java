@@ -5,7 +5,7 @@ import peppertech.crm.api.Leads.Model.DTO.LeadDTO;
 
 import java.util.List;
 
-public interface SLeadI {
+public interface LeadServiceI {
     /**
      * Crea un nuevo lead en el sistema.
      *

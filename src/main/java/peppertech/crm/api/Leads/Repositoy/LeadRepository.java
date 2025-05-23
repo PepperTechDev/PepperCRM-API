@@ -7,7 +7,7 @@ import peppertech.crm.api.Leads.Model.Entity.Lead;
 
 import java.util.List;
 
-public interface RLead extends MongoRepository<Lead, ObjectId> {
+public interface LeadRepository extends MongoRepository<Lead, ObjectId> {
     /**
      * Busca una lista de leads cuyo nombre coincida con el patrón proporcionado,
      * realizando una búsqueda insensible a mayúsculas/minúsculas.
