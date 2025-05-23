@@ -6,21 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardDTO {
+public class PhaseDTO {
     private ObjectId id;
     private String name;
-    private String description;
-    private Date createdAt;
-    private String ownerId;
-    private List<String> administratorIds;
-    private List<String> editorIds;
-    private List<String> viewerIds;
-    private List<ObjectId> phaseIds;
+    private List<ObjectId> taskIds;
 }

@@ -67,5 +67,5 @@ public class Board implements Serializable {
     private List<User> viewers;
 
     @Field("phases")
-    private List<Column> phases;
+    private List<ObjectId> phases;
 }
