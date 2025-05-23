@@ -33,7 +33,6 @@ public class RateLimitingFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // Convertir el string de rutas públicas en una lista
         if (publicRoutes != null && !publicRoutes.isEmpty()) {
             publicRoutesList = Arrays.asList(publicRoutes.split(","));
         }
@@ -60,8 +59,8 @@ public class RateLimitingFilter implements Filter {
         int currentCount = requestsCount.get(clientIP).incrementAndGet();
 
         if (currentCount >= MAX_REQUESTS) {
-            ((HttpServletResponse) response).setStatus(429);  // Too Many Requests
-            response.getWriter().write("You have made too many requests. Please try again later.");
+            ((HttpServletResponse) response).setStatus(429);
+            response.getWriter().write("You have sent too many requests, please try again later");
             return;
         }
 
