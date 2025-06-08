@@ -17,11 +17,11 @@ public interface MapperTask {
 
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
     @Mapping(source = "assignedTo.id", target = "assignedToId", qualifiedByName = "objectIdToString")
-    TaskDTO toDto(Task task);
+    TaskDTO toDTO(Task task);
 
     @Mapping(source = "id", target = "id", qualifiedByName = "stringToObjectId")
     @Mapping(source = "assignedToId", target = "assignedTo.id", qualifiedByName = "stringToObjectId")
-    Task toEntity(TaskDTO dto);
+    Task toEntity(TaskDTO DTO);
 
     @Named("objectIdToString")
     default String objectIdToString(ObjectId id) {

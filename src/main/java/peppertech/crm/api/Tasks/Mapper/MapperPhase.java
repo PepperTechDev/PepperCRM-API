@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public interface MapperPhase {
 
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
-    PhaseDTO toDto(Phase phase);
+    PhaseDTO toDTO(Phase phase);
 
     @Mapping(source = "id", target = "id", qualifiedByName = "stringToObjectId")
     Phase toEntity(PhaseDTO dto);
