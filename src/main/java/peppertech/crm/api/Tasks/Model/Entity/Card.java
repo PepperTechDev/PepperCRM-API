@@ -23,7 +23,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task implements Serializable {
+public class Card implements Serializable {
 
     @Id
     @Field("_id")

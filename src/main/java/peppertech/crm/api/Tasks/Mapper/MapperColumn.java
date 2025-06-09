@@ -4,20 +4,20 @@ import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import peppertech.crm.api.Tasks.Model.DTO.PhaseDTO;
-import peppertech.crm.api.Tasks.Model.Entity.Phase;
+import peppertech.crm.api.Tasks.Model.DTO.ColumnDTO;
+import peppertech.crm.api.Tasks.Model.Entity.Column;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface MapperPhase {
+public interface MapperColumn {
 
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
-    PhaseDTO toDTO(Phase phase);
+    ColumnDTO toDTO(Column column);
 
     @Mapping(source = "id", target = "id", qualifiedByName = "stringToObjectId")
-    Phase toEntity(PhaseDTO dto);
+    Column toEntity(ColumnDTO dto);
 
     @Named("objectIdToString")
     default String objectIdToString(ObjectId id) {

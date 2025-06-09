@@ -4,8 +4,8 @@ import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import peppertech.crm.api.Tasks.Model.DTO.TaskDTO;
-import peppertech.crm.api.Tasks.Model.Entity.Task;
+import peppertech.crm.api.Tasks.Model.DTO.CardDTO;
+import peppertech.crm.api.Tasks.Model.Entity.Card;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,15 +13,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface MapperTask {
+public interface MapperCard {
 
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
     @Mapping(source = "assignedTo.id", target = "assignedToId", qualifiedByName = "objectIdToString")
-    TaskDTO toDTO(Task task);
+    CardDTO toDTO(Card card);
 
     @Mapping(source = "id", target = "id", qualifiedByName = "stringToObjectId")
     @Mapping(source = "assignedToId", target = "assignedTo.id", qualifiedByName = "stringToObjectId")
-    Task toEntity(TaskDTO DTO);
+    Card toEntity(CardDTO DTO);
 
     @Named("objectIdToString")
     default String objectIdToString(ObjectId id) {

@@ -13,7 +13,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import peppertech.crm.api.Users.Model.Entity.User;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -52,20 +51,20 @@ public class Board implements Serializable {
     @NotNull(message = "El propietario no puede ser nulo")
     @DBRef
     @Field("owner")
-    private User owner;
+    private ObjectId owner;
 
     @DBRef
     @Field("administrators")
-    private List<User> administrators;
+    private List<ObjectId> administrators;
 
     @DBRef
     @Field("editors")
-    private List<User> editors;
+    private List<ObjectId> editors;
 
     @DBRef
     @Field("viewers")
-    private List<User> viewers;
+    private List<ObjectId> viewers;
 
-    @Field("phases")
-    private List<ObjectId> phases;
+    @Field("columns")
+    private List<ObjectId> columns;
 }

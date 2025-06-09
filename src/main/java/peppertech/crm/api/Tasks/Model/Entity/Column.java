@@ -22,7 +22,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Phase implements Serializable {
+public class Column implements Serializable {
 
     @Id
     @Field("_id")

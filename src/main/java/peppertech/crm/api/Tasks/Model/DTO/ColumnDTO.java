@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhaseDTO {
+public class ColumnDTO {
     private ObjectId id;
     private String name;
     private List<ObjectId> taskIds;

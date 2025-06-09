@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskDTO {
+public class CardDTO {
     private ObjectId id;
     private String title;
     private String description;
