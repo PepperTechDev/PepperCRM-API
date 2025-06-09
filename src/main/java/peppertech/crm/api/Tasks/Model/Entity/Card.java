@@ -9,32 +9,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Representa una tarea dentro de una fase del tablero Kanban.
+ * Representa una tarea (tarjeta) dentro de una etapa del tablero Kanban.
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Document("cards")
 public class Card implements Serializable {
 
     @Id
     @Field("_id")
     private ObjectId id;
 
-    @NotEmpty(message = "El título de la tarea no puede estar vacío")
-    @Size(min = 3, max = 100, message = "El título debe tener entre 3 y 100 caracteres")
+    @NotEmpty(message = "Task subject cannot be empty")
+    @Size(min = 3, max = 100, message = "Subject must be between 3 and 100 characters")
     @Field("title")
     private String title;
 
-    @Size(max = 1000, message = "La descripción no puede tener más de 1000 caracteres")
+    @Size(max = 1000, message = "Description cannot exceed 1000 characters")
     @Field("description")
     private String description;
 
@@ -46,14 +48,38 @@ public class Card implements Serializable {
     @Field("due_date")
     private Date dueDate;
 
-    @DBRef
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Field("reminder_date")
+    private Date reminderDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Field("closed_date")
+    private Date closedDate;
+
+    @Field("priority")
+    private Priority priority;
+
+    @Field("column")
+    private ObjectId column;
+
     @Field("assigned_to")
     private ObjectId assignedTo;
 
+    @Field("created_by")
+    private ObjectId createdBy;
+
+    @Field("modified_by")
+    private ObjectId modifiedBy;
+
     @Field("tags")
-    private List<String> tags;
+    private List<ObjectId> tags = new ArrayList<>();
 
-    @Field("priority")
-    private String priority;
+    @Field("files")
+    private List<ObjectId> files = new ArrayList<>();
 
+    @Field("comments")
+    private List<ObjectId> comments = new ArrayList<>();
+
+    @Field("subtasks")
+    private List<ObjectId> subtasks = new ArrayList<>();
 }
