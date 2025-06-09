@@ -1,4 +1,4 @@
-package peppertech.crm.api.Tasks.Model.Entity;
+package peppertech.crm.api.Tags.Model.Entity;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

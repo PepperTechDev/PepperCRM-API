@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,22 +33,22 @@ public class CardDTO {
     @Schema(description = "Creation date of the task.",
             example = "2025-06-09T15:00:00.000Z", type = "string", format = "date-time")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    private Date createdAt;
+    private String createdAt;
 
     @Schema(description = "Due date for task completion.",
             example = "2025-06-20", type = "string", format = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date dueDate;
+    private String dueDate;
 
     @Schema(description = "Reminder date for the task.",
             example = "2025-06-18", type = "string", format = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date reminderDate;
+    private String reminderDate;
 
     @Schema(description = "Date when the task was closed/completed.",
             example = "2025-06-22", type = "string", format = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date closedDate;
+    private String closedDate;
 
     @Schema(description = "Priority level of the task.",
             example = "HIGH")

@@ -1,4 +1,4 @@
-package peppertech.crm.api.Tasks.Model.DTO;
+package peppertech.crm.api.Tags.Model.DTO;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

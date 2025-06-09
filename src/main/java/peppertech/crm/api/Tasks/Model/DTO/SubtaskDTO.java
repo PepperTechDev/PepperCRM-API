@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * Data Transfer Object for a Subtask within a Kanban Card.
  */
@@ -27,11 +25,11 @@ public class SubtaskDTO {
 
     @Schema(description = "Date and time when the subtask was created.",
             example = "2025-06-09T14:20:30.123Z")
-    private Date createdAt;
+    private String createdAt;
 
     @Schema(description = "Date when the subtask was closed or completed.",
             example = "2025-06-15")
-    private Date closedDate;
+    private String closedDate;
 
     @Schema(description = "Priority level of the subtask.",
             example = "HIGH")
