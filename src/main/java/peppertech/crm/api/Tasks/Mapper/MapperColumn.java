@@ -14,9 +14,13 @@ import java.util.stream.Collectors;
 public interface MapperColumn {
 
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
+    @Mapping(source = "board", target = "board", qualifiedByName = "objectIdToString")
+    @Mapping(source = "cards", target = "cards", qualifiedByName = "objectIdListToStringList")
     ColumnDTO toDTO(Column column);
 
     @Mapping(source = "id", target = "id", qualifiedByName = "stringToObjectId")
+    @Mapping(source = "board", target = "board", qualifiedByName = "stringToObjectId")
+    @Mapping(source = "cards", target = "cards", qualifiedByName = "stringListToObjectIdList")
     Column toEntity(ColumnDTO dto);
 
     @Named("objectIdToString")

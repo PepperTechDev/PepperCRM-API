@@ -60,31 +60,31 @@ public class CardDTO {
 
     @Schema(description = "ID of the user assigned to this task.",
             example = "64a1f9b5e4b0f23d4c8a7e15")
-    private String assignedToId;
+    private String assignedTo;
 
     @Schema(description = "ID of the user who created the task.",
             example = "64a1f9b5e4b0f23d4c8a7e10")
-    private String createdById;
+    private String createdBy;
 
     @Schema(description = "ID of the user who last modified the task.",
             example = "64a1f9b5e4b0f23d4c8a7e14")
-    private String modifiedById;
+    private String modifiedBy;
 
     @Schema(description = "ID of the column (phase) this task belongs to.",
             example = "64a1f9b5e4b0f23d4c8a7e20")
-    private String columnId;
+    private String column;
 
     @Schema(description = "List of tag IDs associated with this task.",
             example = "[\"64a1f9b5e4b0f23d4c8a7e30\", \"64a1f9b5e4b0f23d4c8a7e31\"]")
-    private List<String> tagIds;
+    private List<String> tags;
 
     @Schema(description = "List of file IDs attached to this task.",
             example = "[\"64a1f9b5e4b0f23d4c8a7e40\"]")
-    private List<String> fileIds;
+    private List<String> files;
 
     @Schema(description = "List of comment IDs linked to this task.",
             example = "[\"64a1f9b5e4b0f23d4c8a7e50\"]")
-    private List<String> commentIds;
+    private List<String> comments;
 
     @Schema(description = "List of subtasks associated with this task.")
     private List<String> subtasks;

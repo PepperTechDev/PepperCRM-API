@@ -45,6 +45,6 @@ public class Subtask implements Serializable {
     private ObjectId assignedTo;
 
     @Field("card")
-    private Card card;
+    private ObjectId card;
 
 }

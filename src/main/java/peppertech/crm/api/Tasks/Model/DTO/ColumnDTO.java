@@ -35,9 +35,9 @@ public class ColumnDTO {
 
     @Schema(description = "ID of the board this column belongs to.",
             example = "64a1f9b5e4b0f23d4c8a7e20")
-    private String boardId;
+    private String board;
 
     @Schema(description = "List of card (task) IDs associated with this column.",
             example = "[\"64a1f9b5e4b0f23d4c8a7e30\", \"64a1f9b5e4b0f23d4c8a7e31\"]")
-    private List<String> cardIds;
+    private List<String> cards;
 }

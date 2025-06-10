@@ -61,21 +61,21 @@ public class BoardDTO {
     @NotBlank(message = "Owner ID is required.")
     @Schema(description = "ID of the board owner.",
             example = "64a1f9b5e4b0f23d4c8a7e10", required = true)
-    private String ownerId;
+    private String owner;
 
     @Schema(description = "List of IDs for administrators with full permissions.",
             example = "[\"64a1f9b5e4b0f23d4c8a7e11\", \"64a1f9b5e4b0f23d4c8a7e15\"]")
-    private List<@NotBlank String> administratorIds;
+    private List<@NotBlank String> administrators;
 
     @Schema(description = "List of IDs for users with editing permissions.",
             example = "[\"64a1f9b5e4b0f23d4c8a7e12\"]")
-    private List<@NotBlank String> editorIds;
+    private List<@NotBlank String> editors;
 
     @Schema(description = "List of IDs for users with view-only permissions.",
             example = "[\"64a1f9b5e4b0f23d4c8a7e13\"]")
-    private List<@NotBlank String> viewerIds;
+    private List<@NotBlank String> viewers;
 
     @Schema(description = "List of IDs for columns (phases) associated with the board.",
             example = "[\"64a1f9b5e4b0f23d4c8a7e14\"]")
-    private List<@NotBlank String> columnIds;
+    private List<@NotBlank String> columns;
 }
