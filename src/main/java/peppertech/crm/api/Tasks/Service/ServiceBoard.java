@@ -71,7 +71,7 @@ public class ServiceBoard implements ServiceBoardI{
     @Cacheable(value = "boards", key = "'all_boards'")
     public List<BoardDTO> getAllBoards() throws Exception {
         return Optional.of(repositoryBoard.findAll())
-                .filter(users -> !users.isEmpty())
+                .filter(boards -> !boards.isEmpty())
                 .map(users -> users.stream()
                         .map(mapperBoard::toDTO)
                         .collect(Collectors.toList()))
