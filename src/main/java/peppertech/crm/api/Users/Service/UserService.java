@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import peppertech.crm.api.Users.Mapper.UserMapper;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
 import peppertech.crm.api.Users.Model.Entity.UserRole;
-import peppertech.crm.api.Users.Repository.RUser;
+import peppertech.crm.api.Users.Repository.UserRepository;
 import peppertech.crm.api.Users.Validator.UserValidatorI;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserServiceI {
 
-    private final RUser repositoryUser;
+    private final UserRepository repositoryUser;
     private final UserMapper userMapper;
     private final UserValidatorI validatorUser;
 
@@ -48,7 +48,7 @@ public class UserService implements UserServiceI {
      * @param validatorUser  validador que valida los datos de usuario.
      */
     @Autowired
-    public UserService(RUser repositoryUser, UserMapper userMapper, UserValidatorI validatorUser) {
+    public UserService(UserRepository repositoryUser, UserMapper userMapper, UserValidatorI validatorUser) {
         this.repositoryUser = repositoryUser;
         this.userMapper = userMapper;
         this.validatorUser = validatorUser;
