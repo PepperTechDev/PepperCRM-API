@@ -2,7 +2,7 @@ package peppertech.crm.api.Tasks.Validator;
 
 import java.util.List;
 
-public interface ValidatorBoardI {
+public interface BoardValidatorI {
     void validateId(String id);
 
     void validateListId(List<String> listId);

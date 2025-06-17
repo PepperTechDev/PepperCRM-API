@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import peppertech.crm.api.Security.Config.Filters.JwtAuthFilter;
 import peppertech.crm.api.Security.Config.headers.CorsConfig;
-import peppertech.crm.api.Users.Service.SUser;
+import peppertech.crm.api.Users.Service.UserServiceService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,11 +30,11 @@ public class SecurityConfiguration {
 
     private final CorsConfig corsConfig;
     private final JwtAuthFilter jwtAuthFilter;
-    private final SUser serviceUser;
+    private final UserServiceService serviceUser;
     @Value("${application.security.public.routes}")
     private String publicRoutes;
 
-    public SecurityConfiguration(CorsConfig corsConfig, JwtAuthFilter jwtAuthFilter, SUser serviceUser) {
+    public SecurityConfiguration(CorsConfig corsConfig, JwtAuthFilter jwtAuthFilter, UserServiceService serviceUser) {
         this.corsConfig = corsConfig;
         this.jwtAuthFilter = jwtAuthFilter;
         this.serviceUser = serviceUser;
@@ -73,7 +73,7 @@ public class SecurityConfiguration {
 
     /**
      * Configura un proveedor de autenticación utilizando DaoAuthenticationProvider.
-     * Este bean es responsable de autenticar a los usuarios basándose en los datos de usuario proporcionados por {@link SUser}.
+     * Este bean es responsable de autenticar a los usuarios basándose en los datos de usuario proporcionados por {@link UserServiceService}.
      *
      * @return Un objeto {@link AuthenticationProvider} configurado.
      */

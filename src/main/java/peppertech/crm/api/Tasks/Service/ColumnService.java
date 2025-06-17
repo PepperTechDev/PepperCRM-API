@@ -5,7 +5,7 @@ import peppertech.crm.api.Tasks.Model.DTO.ColumnDTO;
 
 import java.util.List;
 
-public class ServiceColumn implements ServiceColumnI {
+public class ColumnService implements ColumnServiceI {
     @Override
     public ColumnDTO createPhase(ColumnDTO columnDTO) throws ValidationException {
         return null;

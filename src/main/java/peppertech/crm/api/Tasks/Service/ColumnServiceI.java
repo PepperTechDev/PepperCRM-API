@@ -5,7 +5,7 @@ import peppertech.crm.api.Tasks.Model.DTO.ColumnDTO;
 
 import java.util.List;
 
-public interface ServiceColumnI {
+public interface ColumnServiceI {
     ColumnDTO createPhase(ColumnDTO columnDTO) throws ValidationException;
 
     List<ColumnDTO> getAllPhases() throws Exception;

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import peppertech.crm.api.Security.Service.JwtService;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
-import peppertech.crm.api.Users.Service.SUser;
+import peppertech.crm.api.Users.Service.UserServiceService;
 
 import java.io.IOException;
 
@@ -22,9 +22,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     // TODO: implement role for jwt
 
     private final JwtService jwtService;
-    private final SUser serviceUser;
+    private final UserServiceService serviceUser;
 
-    public JwtAuthFilter(JwtService jwtService, SUser serviceUser) {
+    public JwtAuthFilter(JwtService jwtService, UserServiceService serviceUser) {
         this.jwtService = jwtService;
         this.serviceUser = serviceUser;
     }

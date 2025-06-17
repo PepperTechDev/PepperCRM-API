@@ -9,10 +9,10 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import peppertech.crm.api.Tasks.Mapper.MapperBoard;
+import peppertech.crm.api.Tasks.Mapper.BoardMapper;
 import peppertech.crm.api.Tasks.Model.DTO.BoardDTO;
-import peppertech.crm.api.Tasks.Repository.RepositoryBoard;
-import peppertech.crm.api.Tasks.Validator.ValidatorBoardI;
+import peppertech.crm.api.Tasks.Repository.BoardRepository;
+import peppertech.crm.api.Tasks.Validator.BoardValidatorI;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,15 +24,15 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @Service
-public class ServiceBoard implements ServiceBoardI{
-    private final RepositoryBoard repositoryBoard;
-    private final MapperBoard mapperBoard;
-    private final ValidatorBoardI validatorBoard;
+public class BoardService implements BoardServiceI {
+    private final BoardRepository boardRepository;
+    private final BoardMapper boardMapper;
+    private final BoardValidatorI validatorBoard;
 
     @Autowired
-    public ServiceBoard(RepositoryBoard repositoryBoard, MapperBoard mapperBoard, ValidatorBoardI validatorBoard) {
-        this.repositoryBoard = repositoryBoard;
-        this.mapperBoard = mapperBoard;
+    public BoardService(BoardRepository boardRepository, BoardMapper boardMapper, BoardValidatorI validatorBoard) {
+        this.boardRepository = boardRepository;
+        this.boardMapper = boardMapper;
         this.validatorBoard = validatorBoard;
     }
 
@@ -61,19 +61,19 @@ public class ServiceBoard implements ServiceBoardI{
                     dto.setCreatedAt(formatter.format(new Date()));
                     return dto;
                 })
-                .map(mapperBoard::toEntity)
-                .map(repositoryBoard::save)
-                .map(mapperBoard::toDTO)
+                .map(boardMapper::toEntity)
+                .map(boardRepository::save)
+                .map(boardMapper::toDTO)
                 .orElseThrow(() -> new IllegalStateException("The Board could not be created\n"));
     }
 
     @Override
     @Cacheable(value = "boards", key = "'all_boards'")
     public List<BoardDTO> getAllBoards() throws Exception {
-        return Optional.of(repositoryBoard.findAll())
+        return Optional.of(boardRepository.findAll())
                 .filter(boards -> !boards.isEmpty())
                 .map(users -> users.stream()
-                        .map(mapperBoard::toDTO)
+                        .map(boardMapper::toDTO)
                         .collect(Collectors.toList()))
                 .orElseThrow(() -> new Exception("There is no board."));
     }

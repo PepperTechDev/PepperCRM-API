@@ -15,15 +15,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import peppertech.crm.api.Responses.ErrorResponse;
 import peppertech.crm.api.Tasks.Model.DTO.BoardDTO;
-import peppertech.crm.api.Tasks.Service.ServiceBoardI;
+import peppertech.crm.api.Tasks.Service.BoardServiceI;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
-import peppertech.crm.api.Users.Service.SUserI;
+import peppertech.crm.api.Users.Service.UserServiceI;
 
 /**
  * Controlador REST para las operaciones relacionadas con los tableros.
  * <p>Este controlador proporciona una serie de métodos para gestionar tableros en el sistema.</p>
  *
- * @see SUserI
+ * @see UserServiceI
  */
 @RestController
 @RequestMapping("/Boards")
@@ -31,10 +31,10 @@ import peppertech.crm.api.Users.Service.SUserI;
 @Tag(name = "Boards", description = "Operations related to boards")
 public class BoardController {
 
-    private final ServiceBoardI serviceBoard;
+    private final BoardServiceI serviceBoard;
 
     @Autowired
-    public BoardController(ServiceBoardI serviceBoard) {
+    public BoardController(BoardServiceI serviceBoard) {
         this.serviceBoard = serviceBoard;
     }
 

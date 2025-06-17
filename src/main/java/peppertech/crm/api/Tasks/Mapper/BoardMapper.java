@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Mapper(componentModel = "spring")
-public interface MapperBoard {
+public interface BoardMapper {
     @Mapping(source = "id", target = "id", qualifiedByName = "stringToObjectId")
     @Mapping(source = "createdAt", target = "createdAt", qualifiedByName = "stringToDate")
     @Mapping(source = "startDate", target = "startDate", qualifiedByName = "stringToDate")

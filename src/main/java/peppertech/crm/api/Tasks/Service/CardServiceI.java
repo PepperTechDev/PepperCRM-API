@@ -5,7 +5,7 @@ import peppertech.crm.api.Tasks.Model.DTO.CardDTO;
 
 import java.util.List;
 
-public interface ServiceCardI {
+public interface CardServiceI {
     CardDTO createTask(CardDTO cardDTO) throws ValidationException;
 
     List<CardDTO> getAllTasks() throws Exception;

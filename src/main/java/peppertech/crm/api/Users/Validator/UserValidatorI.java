@@ -6,10 +6,10 @@ import java.util.List;
  * Interface for user data validation.
  * <p>
  * This interface defines the necessary methods to validate common user fields, such as ID, first name, last name,
- * email, password, and role. It is implemented by classes that provide the concrete validation logic, such as {@link VUser}.
+ * email, password, and role. It is implemented by classes that provide the concrete validation logic, such as {@link UserValidatorValidator}.
  * </p>
  */
-public interface VUserI {
+public interface UserValidatorI {
 
     /**
      * Validates a user's ID.

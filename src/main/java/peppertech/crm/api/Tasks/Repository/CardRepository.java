@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import peppertech.crm.api.Tasks.Model.Entity.Card;
 
 @Repository
-public interface RepositoryCard extends MongoRepository<Card, ObjectId>{
+public interface CardRepository extends MongoRepository<Card, ObjectId>{
 
 }

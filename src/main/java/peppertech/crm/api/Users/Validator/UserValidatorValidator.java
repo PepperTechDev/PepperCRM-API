@@ -24,7 +24,7 @@ import static peppertech.crm.api.Users.Validator.UserRegex.*;
  * </p>
  */
 @Component
-public class VUser implements VUserI {
+public class UserValidatorValidator implements UserValidatorI {
 
     /**
      * Indicates if the validation was successful.
@@ -40,7 +40,7 @@ public class VUser implements VUserI {
      * Constructor for the user validation class.
      * Initializes the validation state as "valid" and creates an empty error list.
      */
-    public VUser() {
+    public UserValidatorValidator() {
         this.valid = true;
         this.errors = new ArrayList<>();
     }

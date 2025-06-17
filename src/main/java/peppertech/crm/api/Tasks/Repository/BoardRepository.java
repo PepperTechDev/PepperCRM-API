@@ -9,7 +9,7 @@ import peppertech.crm.api.Tasks.Model.Entity.Board;
 import java.util.List;
 
 @Repository
-public interface RepositoryBoard extends MongoRepository<Board, ObjectId> {
+public interface BoardRepository extends MongoRepository<Board, ObjectId> {
     // Buscar tableros por nombre (insensible a mayúsculas/minúsculas)
     @Query("{ 'name' : { $regex: ?0, $options: 'i' } }")
     List<Board> findByName(String name);

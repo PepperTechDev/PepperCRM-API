@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Mapper(componentModel = "spring")
-public interface MapperSubtask {
+public interface SubtaskMapper {
 
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
     @Mapping(source = "assignedTo", target = "assignedTo", qualifiedByName = "objectIdToString")

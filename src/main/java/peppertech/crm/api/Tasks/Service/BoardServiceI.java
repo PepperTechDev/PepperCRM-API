@@ -5,7 +5,7 @@ import peppertech.crm.api.Tasks.Model.DTO.BoardDTO;
 
 import java.util.List;
 
-public interface ServiceBoardI {
+public interface BoardServiceI {
     BoardDTO createBoard(BoardDTO boardDTO) throws ValidationException;
 
     List<BoardDTO> getAllBoards() throws Exception;

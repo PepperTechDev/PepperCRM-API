@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import peppertech.crm.api.Tasks.Model.Entity.Column;
 
 @Repository
-public interface RepositoryColumn extends MongoRepository<Column, ObjectId> {
+public interface ColumnRepository extends MongoRepository<Column, ObjectId> {
 }

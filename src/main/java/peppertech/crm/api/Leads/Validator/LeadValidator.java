@@ -20,12 +20,12 @@ import static peppertech.crm.api.Leads.Validator.LeadRegex.*;
  * </p>
  */
 @Component
-public class VLead implements VLeadI {
+public class LeadValidator implements LeadValidatorI {
 
     public boolean valid;
     public List<String> errors;
 
-    public VLead() {
+    public LeadValidator() {
         this.valid = true;
         this.errors = new ArrayList<>();
     }

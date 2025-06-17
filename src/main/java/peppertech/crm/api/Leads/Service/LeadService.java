@@ -11,10 +11,10 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import peppertech.crm.api.Leads.Mapper.MLead;
+import peppertech.crm.api.Leads.Mapper.LeadMapper;
 import peppertech.crm.api.Leads.Model.DTO.LeadDTO;
-import peppertech.crm.api.Leads.Repository.RLead;
-import peppertech.crm.api.Leads.Validator.VLeadI;
+import peppertech.crm.api.Leads.Repository.LeadRepository;
+import peppertech.crm.api.Leads.Validator.LeadValidatorI;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,11 +30,11 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @Service
-public class SLead implements SLeadI {
+public class LeadService implements LeadServiceI {
 
-    private final RLead repositoryLead;
-    private final MLead mapperLead;
-    private final VLeadI validatorLead;
+    private final LeadRepository repositoryLead;
+    private final LeadMapper mapperLead;
+    private final LeadValidatorI validatorLead;
 
     /**
      * Constructor que inyecta las dependencias del servicio.
@@ -44,7 +44,7 @@ public class SLead implements SLeadI {
      * @param validatorLead  validador que valida los datos de lead.
      */
     @Autowired
-    public SLead(RLead repositoryLead, MLead mapperLead, VLeadI validatorLead) {
+    public LeadService(LeadRepository repositoryLead, LeadMapper mapperLead, LeadValidatorI validatorLead) {
         this.repositoryLead = repositoryLead;
         this.mapperLead = mapperLead;
         this.validatorLead = validatorLead;

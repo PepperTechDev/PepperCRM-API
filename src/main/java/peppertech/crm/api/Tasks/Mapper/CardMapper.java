@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface MapperCard {
+public interface CardMapper {
 
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
     @Mapping(source = "assignedTo", target = "assignedTo", qualifiedByName = "objectIdToString")

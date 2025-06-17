@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static peppertech.crm.api.Tasks.Validator.BoardRegex.NAME_PATTERN;
 
 @Component
-public class ValidatorBoard implements ValidatorBoardI {
+public class BoardValidator implements BoardValidatorI {
     public boolean valid;
     public List<String> errors;
 
@@ -28,7 +28,7 @@ public class ValidatorBoard implements ValidatorBoardI {
         errors = new ArrayList<>();
     }
 
-    public ValidatorBoard() {
+    public BoardValidator() {
         this.valid = true;
         this.errors = new ArrayList<>();
     }

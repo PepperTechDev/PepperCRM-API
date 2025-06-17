@@ -3,22 +3,22 @@ package peppertech.crm.api.Tasks.Service;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import peppertech.crm.api.Tasks.Mapper.MapperCard;
+import peppertech.crm.api.Tasks.Mapper.CardMapper;
 import peppertech.crm.api.Tasks.Model.DTO.CardDTO;
-import peppertech.crm.api.Tasks.Repository.RepositoryCard;
+import peppertech.crm.api.Tasks.Repository.CardRepository;
 
 import java.util.List;
 
 @Service
-public class ServiceCard implements ServiceCardI {
+public class CardService implements CardServiceI {
 
-    private final RepositoryCard repositoryCard;
-    private final MapperCard mapperCard;
+    private final CardRepository cardRepository;
+    private final CardMapper cardMapper;
 
     @Autowired
-    public ServiceCard(RepositoryCard repositoryCard, MapperCard mapperCard) {
-        this.repositoryCard = repositoryCard;
-        this.mapperCard = mapperCard;
+    public CardService(CardRepository cardRepository, CardMapper cardMapper) {
+        this.cardRepository = cardRepository;
+        this.cardMapper = cardMapper;
     }
 
     @Override

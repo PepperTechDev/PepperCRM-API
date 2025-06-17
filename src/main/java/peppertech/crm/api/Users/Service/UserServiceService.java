@@ -13,11 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import peppertech.crm.api.Users.Mapper.MUser;
+import peppertech.crm.api.Users.Mapper.UserMapper;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
 import peppertech.crm.api.Users.Model.Entity.UserRole;
 import peppertech.crm.api.Users.Repository.RUser;
-import peppertech.crm.api.Users.Validator.VUserI;
+import peppertech.crm.api.Users.Validator.UserValidatorI;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -34,23 +34,23 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @Service
-public class SUser implements SUserI {
+public class UserServiceService implements UserServiceI {
 
     private final RUser repositoryUser;
-    private final MUser mapperUser;
-    private final VUserI validatorUser;
+    private final UserMapper userMapper;
+    private final UserValidatorI validatorUser;
 
     /**
      * Constructor que inyecta las dependencias del servicio.
      *
      * @param repositoryUser repositorio que maneja las operaciones de base de datos.
-     * @param mapperUser     convertidor que convierte entidades User a UserDTO.
+     * @param userMapper     convertidor que convierte entidades User a UserDTO.
      * @param validatorUser  validador que valida los datos de usuario.
      */
     @Autowired
-    public SUser(RUser repositoryUser, MUser mapperUser, VUserI validatorUser) {
+    public UserServiceService(RUser repositoryUser, UserMapper userMapper, UserValidatorI validatorUser) {
         this.repositoryUser = repositoryUser;
-        this.mapperUser = mapperUser;
+        this.userMapper = userMapper;
         this.validatorUser = validatorUser;
     }
 
@@ -104,9 +104,9 @@ public class SUser implements SUserI {
                     dto.setCreateAt(formatter.format(new Date()));
                     return dto;
                 })
-                .map(mapperUser::toEntity)
+                .map(userMapper::toEntity)
                 .map(repositoryUser::save)
-                .map(mapperUser::toDTO)
+                .map(userMapper::toDTO)
                 .orElseThrow(() -> new IllegalStateException("El Usuario ya existe"));
     }
 
@@ -128,7 +128,7 @@ public class SUser implements SUserI {
         return Optional.of(repositoryUser.findAll())
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.stream()
-                        .map(mapperUser::toDTO)
+                        .map(userMapper::toDTO)
                         .collect(Collectors.toList()))
                 .orElseThrow(() -> new Exception("No existe ningún usuario"));
     }
@@ -163,7 +163,7 @@ public class SUser implements SUserI {
                 .map(repositoryUser::findById)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .map(mapperUser::toDTO)
+                .map(userMapper::toDTO)
                 .orElseThrow(() -> new Exception("El Usuario no existe"));
     }
 
@@ -198,7 +198,7 @@ public class SUser implements SUserI {
                 .map(repositoryUser::findByEmail)
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.get(0))
-                .map(mapperUser::toDTO)
+                .map(userMapper::toDTO)
                 .orElseThrow(() -> new Exception("El usuario no existe"));
     }
 
@@ -233,7 +233,7 @@ public class SUser implements SUserI {
                 .map(repositoryUser::findByName)
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.stream()
-                        .map(mapperUser::toDTO)
+                        .map(userMapper::toDTO)
                         .collect(Collectors.toList()))
                 .orElseThrow(() -> new Exception("No existe ningún usuario con el nombre"));
     }
@@ -269,7 +269,7 @@ public class SUser implements SUserI {
                 .map(repositoryUser::findByLastname)
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.stream()
-                        .map(mapperUser::toDTO)
+                        .map(userMapper::toDTO)
                         .collect(Collectors.toList()))
                 .orElseThrow(() -> new Exception("No existe ningún usuario con el apellido"));
     }
@@ -305,7 +305,7 @@ public class SUser implements SUserI {
                 .map(repositoryUser::findByRole)
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.stream()
-                        .map(mapperUser::toDTO)
+                        .map(userMapper::toDTO)
                         .collect(Collectors.toList()))
                 .orElseThrow(() -> new Exception("No existe ningún usuario con el rol"));
     }
@@ -384,9 +384,9 @@ public class SUser implements SUserI {
                     validatorUser.Reset();
                     return dto;
                 })
-                .map(mapperUser::toEntity)
+                .map(userMapper::toEntity)
                 .map(repositoryUser::save)
-                .map(mapperUser::toDTO)
+                .map(userMapper::toDTO)
                 .orElseThrow(() -> new Exception("El usuario no se pudo actualizar"));
     }
 
