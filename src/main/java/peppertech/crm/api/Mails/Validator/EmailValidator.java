@@ -1,4 +1,4 @@
-package peppertech.crm.api.Mail.Validator;
+package peppertech.crm.api.Mails.Validator;
 
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
-package peppertech.crm.api.Mail.Service;
+package peppertech.crm.api.Mails.Service;
 
-import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
+import peppertech.crm.api.Mails.Model.DTO.EmailDTO;
 
 import java.util.List;
 

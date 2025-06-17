@@ -11,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import peppertech.crm.api.Exceptions.InvalidTokenException;
-import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
-import peppertech.crm.api.Mail.Service.EmailService;
-import peppertech.crm.api.Mail.Validator.EmailValidatorI;
+import peppertech.crm.api.Mails.Model.DTO.EmailDTO;
+import peppertech.crm.api.Mails.Service.EmailService;
+import peppertech.crm.api.Mails.Validator.EmailValidatorI;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
 import peppertech.crm.api.Users.Service.UserServiceI;
 

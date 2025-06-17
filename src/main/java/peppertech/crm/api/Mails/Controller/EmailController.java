@@ -1,4 +1,4 @@
-package peppertech.crm.api.Mail.Controller;
+package peppertech.crm.api.Mails.Controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
-import peppertech.crm.api.Mail.Service.EmailServiceI;
+import peppertech.crm.api.Mails.Model.DTO.EmailDTO;
+import peppertech.crm.api.Mails.Service.EmailServiceI;
 import peppertech.crm.api.Responses.ErrorResponse;
 
 @RestController

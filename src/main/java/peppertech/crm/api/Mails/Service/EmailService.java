@@ -1,4 +1,4 @@
-package peppertech.crm.api.Mail.Service;
+package peppertech.crm.api.Mails.Service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -12,9 +12,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import peppertech.crm.api.Mail.Mapper.EmailMapper;
-import peppertech.crm.api.Mail.Model.DTO.EmailDTO;
-import peppertech.crm.api.Mail.Repository.EmailRepository;
+import peppertech.crm.api.Mails.Mapper.EmailMapper;
+import peppertech.crm.api.Mails.Model.DTO.EmailDTO;
+import peppertech.crm.api.Mails.Repository.EmailRepository;
 
 import java.io.File;
 import java.util.List;
