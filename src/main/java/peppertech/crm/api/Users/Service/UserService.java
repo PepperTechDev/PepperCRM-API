@@ -44,7 +44,7 @@ public class UserService implements UserServiceI {
      * Constructor que inyecta las dependencias del servicio.
      *
      * @param repositoryUser repositorio que maneja las operaciones de base de datos.
-     * @param userMapper     convertidor que convierte entidades User a UserDTO.
+     * @param mapperUser     convertidor que convierte entidades User a UserDTO.
      * @param validatorUser  validador que valida los datos de usuario.
      */
     @Autowired
@@ -160,8 +160,7 @@ public class UserService implements UserServiceI {
                     validatorUser.Reset();
                     return new ObjectId(ValidId);
                 })
-                .map(repositoryUser::findById)
-                .filter(Optional::isPresent)
+                .flatMap(repositoryUser::findById)
                 .map(mapperUser::toDTO)
                 .orElseThrow(() -> new Exception("User does not exist."));
     }

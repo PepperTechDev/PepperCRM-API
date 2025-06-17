@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -12,19 +13,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import peppertech.crm.api.Security.Service.JwtService;
 import peppertech.crm.api.Users.Model.DTO.UserDTO;
-import peppertech.crm.api.Users.Service.UserService;
 
 import java.io.IOException;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    // TODO: implement role for jwt
-
     private final JwtService jwtService;
-    private final UserService serviceUser;
 
-    public JwtAuthFilter(JwtService jwtService, UserService serviceUser) {
+    @Autowired
+    public JwtAuthFilter(JwtService jwtService) {
         this.jwtService = jwtService;
     }
 
