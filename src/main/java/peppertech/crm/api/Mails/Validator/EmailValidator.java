@@ -8,13 +8,15 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 @Component
-public class EmailValidator implements EmailValidatorI {
-    private static final String EMAIL_PATTERN =
-            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-    private static final int SUBJECT_MAX_LENGTH = 100;
-    private static final int BODY_MAX_LENGTH = 1000;
+public class EmailValidator implements EmailValidatorI{
     private boolean valid;
     private List<String> errors;
+
+    private static final String EMAIL_PATTERN =
+            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
+    private static final int SUBJECT_MAX_LENGTH = 100;
+    private static final int BODY_MAX_LENGTH = 1000;
 
     public EmailValidator() {
         this.valid = true;

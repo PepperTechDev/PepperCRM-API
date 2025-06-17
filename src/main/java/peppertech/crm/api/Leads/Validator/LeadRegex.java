@@ -5,7 +5,7 @@ package peppertech.crm.api.Leads.Validator;
  * <p>
  * Esta clase define una serie de constantes que representan las expresiones regulares (regex) utilizadas
  * para validar diversos campos del lead, como el nombre, apellido, correo electrónico, teléfono e interés.
- * Estas expresiones se usan en los métodos de validación de la clase {@link VLead} y otras clases relacionadas.
+ * Estas expresiones se usan en los métodos de validación de la clase {@link LeadValidator} y otras clases relacionadas.
  * </p>
  */
 public class LeadRegex {

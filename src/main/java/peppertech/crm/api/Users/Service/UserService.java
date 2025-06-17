@@ -44,7 +44,7 @@ public class UserService implements UserServiceI {
      * Constructor que inyecta las dependencias del servicio.
      *
      * @param repositoryUser repositorio que maneja las operaciones de base de datos.
-     * @param mapperUser     convertidor que convierte entidades User a UserDTO.
+     * @param userMapper     convertidor que convierte entidades User a UserDTO.
      * @param validatorUser  validador que valida los datos de usuario.
      */
     @Autowired
@@ -83,7 +83,7 @@ public class UserService implements UserServiceI {
      */
     @Override
     @Transactional
-    @CachePut(value = "users", key = "#userDTO.email")
+    @CachePut(value = "users", key = "#result.id")
     public UserDTO CreateUser(UserDTO userDTO) throws ValidationException, IllegalStateException {
         return Optional.of(userDTO)
                 .filter(dto -> !repositoryUser.existsByEmail(dto.getEmail()))
@@ -162,7 +162,6 @@ public class UserService implements UserServiceI {
                 })
                 .map(repositoryUser::findById)
                 .filter(Optional::isPresent)
-                .map(Optional::get)
                 .map(mapperUser::toDTO)
                 .orElseThrow(() -> new Exception("User does not exist."));
     }

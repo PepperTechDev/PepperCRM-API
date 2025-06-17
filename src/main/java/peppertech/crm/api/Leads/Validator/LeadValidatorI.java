@@ -6,10 +6,10 @@ import java.util.List;
  * Interfaz para la validación de los datos de un lead.
  * <p>
  * Esta interfaz define los métodos necesarios para validar los campos comunes de un lead, como el ID, nombre, apellido,
- * correo electrónico, teléfono e interés. Implementada por clases que proporcionan la lógica de validación concreta, como {@link VLead}.
+ * correo electrónico, teléfono e interés. Implementada por clases que proporcionan la lógica de validación concreta, como {@link LeadValidator}.
  * </p>
  */
-public interface VLeadI {
+public interface LeadValidatorI {
 
     /**
      * Válida el ID de un lead.

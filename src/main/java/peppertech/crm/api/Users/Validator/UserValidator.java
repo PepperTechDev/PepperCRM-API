@@ -27,6 +27,7 @@ import static peppertech.crm.api.Users.Validator.UserRegex.*;
 public class UserValidator implements UserValidatorI {
 
     /**
+
      * Indica si la validación fue exitosa.
      */
     public boolean valid;

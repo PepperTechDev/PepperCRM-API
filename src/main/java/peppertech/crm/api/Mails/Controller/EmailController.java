@@ -75,12 +75,12 @@ public class EmailController {
     @Operation(summary = "Enviar y registrar correo",
             description = "Envía un correo electrónico y lo almacena en la base de datos.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Correo enviado y registrado correctamente.",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = EmailDTO.class))),
-                    @ApiResponse(responseCode = "400", description = "Solicitud inválida.",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-                    @ApiResponse(responseCode = "500", description = "Error interno al enviar el correo.",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+                @ApiResponse(responseCode = "200", description = "Correo enviado y registrado correctamente.",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = EmailDTO.class))),
+                @ApiResponse(responseCode = "400", description = "Solicitud inválida.",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+                @ApiResponse(responseCode = "500", description = "Error interno al enviar el correo.",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
             })
     public ResponseEntity<?> sendAndSaveMail(@RequestBody EmailDTO emailDetails) {
         try {
