@@ -60,9 +60,9 @@ public class BoardController {
         try {
             return new ResponseEntity<>(serviceBoard.createBoard(boardDTO), HttpStatus.CREATED);
         } catch (ValidationException e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al crear el tablero [" + e.getMessage() + "]", HttpStatus.FORBIDDEN.value()), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(new ErrorResponse("Error creating board. " + e.getMessage(), HttpStatus.FORBIDDEN.value()), HttpStatus.FORBIDDEN);
         } catch (IllegalStateException e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al crear el tablero [" + e.getMessage() + "]", HttpStatus.CONFLICT.value()), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new ErrorResponse("Error creating board. " + e.getMessage(), HttpStatus.CONFLICT.value()), HttpStatus.CONFLICT);
         }
     }
 
@@ -83,7 +83,7 @@ public class BoardController {
         try {
             return new ResponseEntity<>(serviceBoard.getAllBoards(), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ErrorResponse("Error al buscar los tableros [" + e.getMessage() + "]", HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponse("Error searching for boards. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
 }

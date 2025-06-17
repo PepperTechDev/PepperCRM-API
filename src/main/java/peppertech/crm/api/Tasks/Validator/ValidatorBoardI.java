@@ -16,4 +16,10 @@ public interface ValidatorBoardI {
     List<String> getErrors();
 
     void validateStatus(String status);
+
+    void validateDate(String date);
+
+    void validateDescription(String description);
+
+    void validateFutureDate(String date);
 }

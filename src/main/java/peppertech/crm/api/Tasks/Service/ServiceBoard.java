@@ -38,17 +38,18 @@ public class ServiceBoard implements ServiceBoardI{
 
     @Override
     @Transactional
-    @CachePut(value = "boards", key = "#boardDTO.id")
-    public BoardDTO createBoard(BoardDTO boardDTO) throws ValidationException {
+    @CachePut(value = "boards", key = "#result.id")
+    public BoardDTO createBoard(BoardDTO boardDTO) throws ValidationException, IllegalStateException {
         return Optional.of(boardDTO)
                 .map(dto -> {
-                    validatorBoard.validateId(dto.getId());
                     validatorBoard.validateName(dto.getName());
                     validatorBoard.validateStatus(dto.getStatus());
                     validatorBoard.validateId(dto.getOwner());
                     validatorBoard.validateListId(dto.getAdministrators());
                     validatorBoard.validateListId(dto.getEditors());
                     validatorBoard.validateListId(dto.getViewers());
+                    validatorBoard.validateFutureDate(dto.getEndDate());
+                    validatorBoard.validateDate(dto.getStartDate());
                     if (!validatorBoard.isValid()) {
                         throw new ValidationException(validatorBoard.getErrors().toString());
                     }
@@ -56,15 +57,14 @@ public class ServiceBoard implements ServiceBoardI{
                     return dto;
                 })
                 .map(dto -> {
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     dto.setCreatedAt(formatter.format(new Date()));
-                    dto.setStartDate(formatter.format(new Date()));
                     return dto;
                 })
                 .map(mapperBoard::toEntity)
                 .map(repositoryBoard::save)
                 .map(mapperBoard::toDTO)
-                .orElseThrow(() -> new IllegalStateException("No se pudo crear el Board"));
+                .orElseThrow(() -> new IllegalStateException("The Board could not be created\n"));
     }
 
     @Override

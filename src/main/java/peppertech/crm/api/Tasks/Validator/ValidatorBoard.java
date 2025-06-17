@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import peppertech.crm.api.Tasks.Model.Entity.ProjectStatus;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,12 +12,21 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static peppertech.crm.api.Users.Validator.UserRegex.NAME_PATTERN;
+import static peppertech.crm.api.Tasks.Validator.BoardRegex.NAME_PATTERN;
 
 @Component
 public class ValidatorBoard implements ValidatorBoardI {
     public boolean valid;
     public List<String> errors;
+
+    /**
+     * Resetea el estado de la validación, marcando el usuario como válido y limpiando la lista de errores.
+     */
+    @Override
+    public void Reset() {
+        valid = true;
+        errors = new ArrayList<>();
+    }
 
     public ValidatorBoard() {
         this.valid = true;
@@ -38,7 +48,7 @@ public class ValidatorBoard implements ValidatorBoardI {
     @Override
     public void validateId(String id) {
         if (id == null || id.isEmpty()) {
-            errors.add("v");
+            errors.add("ID cannot be null or empty");
             valid = false;
         } else if (!ObjectId.isValid(id)) {
             errors.add("Id must be a 24-character hexadecimal");
@@ -61,16 +71,6 @@ public class ValidatorBoard implements ValidatorBoardI {
         }
     }
 
-
-    /**
-     * Resetea el estado de la validación, marcando el usuario como válido y limpiando la lista de errores.
-     */
-    @Override
-    public void Reset() {
-        valid = true;
-        errors = new ArrayList<>();
-    }
-
     /**
      * Válida el nombre de un usuario.
      * <p>
@@ -83,9 +83,56 @@ public class ValidatorBoard implements ValidatorBoardI {
     public void validateName(String name) {
         if (name == null || !Pattern.matches(NAME_PATTERN, name)) {
             valid = false;
-            errors.add("El nombre debe tener entre 4 y 15 caracteres y solo letras");
+            errors.add("The name must be between 4 and 15 characters and only letters");
         }
     }
+
+    @Override
+    public void validateDescription(String description) {
+        if (description == null || description.isEmpty()) {
+            errors.add("Description cannot be empty");
+            valid = false;
+        } else if (description.length() > 300) {
+            errors.add("Description must not exceed 300 characters");
+            valid = false;
+        }
+    }
+
+    @Override
+    public void validateDate(String date) {
+        if (date == null || date.isEmpty()) {
+            errors.add("Date cannot be empty");
+            valid = false;
+        } else {
+            try {
+                new java.text.SimpleDateFormat("yyyy-MM-dd").parse(date);
+            } catch (java.text.ParseException e) {
+                errors.add("Date must be in the format yyyy-MM-dd");
+                valid = false;
+            }
+        }
+    }
+
+    @Override
+    public void validateFutureDate(String date) {
+        if (date == null || date.isEmpty()) {
+            errors.add("Date cannot be empty");
+            valid = false;
+            return;
+        }
+
+        try {
+            java.util.Date parsedDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            if (parsedDate.before(new java.util.Date())) {
+                errors.add("Date must be in the future");
+                valid = false;
+            }
+        } catch (java.text.ParseException e) {
+            errors.add("Date must be in the format yyyy-MM-dd");
+            valid = false;
+        }
+    }
+
 
     /**
      * Validates a board's status.
