@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @Service
-public class UserServiceService implements UserServiceI {
+public class UserService implements UserServiceI {
 
     private final RUser repositoryUser;
     private final UserMapper userMapper;
@@ -48,7 +48,7 @@ public class UserServiceService implements UserServiceI {
      * @param validatorUser  validador que valida los datos de usuario.
      */
     @Autowired
-    public UserServiceService(RUser repositoryUser, UserMapper userMapper, UserValidatorI validatorUser) {
+    public UserService(RUser repositoryUser, UserMapper userMapper, UserValidatorI validatorUser) {
         this.repositoryUser = repositoryUser;
         this.userMapper = userMapper;
         this.validatorUser = validatorUser;
