@@ -7,56 +7,59 @@ import peppertech.crm.api.Leads.Model.Entity.Lead;
 
 import java.util.List;
 
+/**
+ * Repository interface for accessing Lead documents in MongoDB.
+ */
 public interface LeadRepository extends MongoRepository<Lead, ObjectId> {
+
     /**
-     * Busca una lista de leads cuyo nombre coincida con el patrón proporcionado,
-     * realizando una búsqueda insensible a mayúsculas/minúsculas.
+     * Searches for a list of leads whose first name matches the provided pattern,
+     * performing a case-insensitive search.
      *
-     * @param name El nombre o patrón a buscar en el campo 'name' del lead.
-     * @return Una lista de leads cuyo nombre coincida con el patrón.
+     * @param name The name or pattern to search in the 'name' field of the lead.
+     * @return A list of leads whose name matches the given pattern.
      */
     @Query("{ 'name' : { $regex: ?0, $options: 'i' } }")
     List<Lead> findByName(String name);
 
     /**
-     * Busca una lista de leads cuyo apellido coincida con el patrón proporcionado,
-     * realizando una búsqueda insensible a mayúsculas/minúsculas.
+     * Searches for a list of leads whose last name matches the provided pattern,
+     * performing a case-insensitive search.
      *
-     * @param lastname El apellido o patrón a buscar en el campo 'lastname' del lead.
-     * @return Una lista de leads cuyo apellido coincida con el patrón.
+     * @param lastname The last name or pattern to search in the 'lastname' field of the lead.
+     * @return A list of leads whose last name matches the given pattern.
      */
     @Query("{ 'lastname' : { $regex: ?0, $options: 'i' } }")
     List<Lead> findByLastname(String lastname);
 
     /**
-     * Busca una lista de leads cuyo nombre y apellido coincidan con los patrones
-     * proporcionados, realizando una búsqueda insensible a mayúsculas/minúsculas.
+     * Searches for a list of leads whose name and last name match the provided patterns,
+     * performing a case-insensitive search.
      *
-     * @param name     El nombre o patrón a buscar en el campo 'name' del lead.
-     * @param lastname El apellido o patrón a buscar en el campo 'lastname' del lead.
-     * @return Una lista de leads cuyo nombre y apellido coincidan con los patrones.
+     * @param name     The name or pattern to search in the 'name' field.
+     * @param lastname The last name or pattern to search in the 'lastname' field.
+     * @return A list of leads matching both the name and last name patterns.
      */
     @Query("{ 'name' : { $regex: ?0, $options: 'i' }, 'lastname' : { $regex: ?1, $options: 'i' } }")
     List<Lead> findByFullName(String name, String lastname);
 
     /**
-     * Busca una lista de leads cuyo correo electrónico coincida exactamente
-     * con el correo proporcionado.
+     * Searches for a list of leads whose email exactly matches the provided email.
      *
-     * @param email El correo electrónico a buscar en el campo 'email' del lead.
-     * @return Una lista de leads cuyo correo electrónico coincida exactamente.
+     * @param email The email to search for in the 'email' field of the lead.
+     * @return A list of leads with the exact email match.
      */
     @Query("{ 'email' : ?0 }")
     List<Lead> findByEmail(String email);
 
     /**
-     * Verifica si existe un lead con el correo electrónico proporcionado.
+     * Checks whether a lead exists with the specified email address.
      *
-     * <p>Este método devuelve {@code true} si existe un lead con el correo electrónico especificado,
-     * y {@code false} en caso contrario.</p>
+     * <p>Returns {@code true} if a lead exists with the given email address,
+     * otherwise returns {@code false}.</p>
      *
-     * @param email El correo electrónico a verificar.
-     * @return {@code true} si existe un lead con el correo electrónico proporcionado, {@code false} en caso contrario.
+     * @param email The email address to verify.
+     * @return {@code true} if a lead with the given email exists, {@code false} otherwise.
      */
     boolean existsByEmail(String email);
 }

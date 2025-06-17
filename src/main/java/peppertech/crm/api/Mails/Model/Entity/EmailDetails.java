@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "correos")
+@Document(collection = "emails")
 public class EmailDetails implements Serializable {
     @Id
     @Field("_id")

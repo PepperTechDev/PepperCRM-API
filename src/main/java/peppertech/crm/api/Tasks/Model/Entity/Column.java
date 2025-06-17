@@ -42,7 +42,7 @@ public class Column implements Serializable {
 
     @Size(max = 10, message = "Color must be a valid hex value")
     @Field("color")
-    private String color; // Example: "#1A73E8"
+    private String color;
 
     @Field("board")
     private ObjectId board;

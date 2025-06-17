@@ -5,11 +5,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -22,26 +26,26 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "files")
-public class File {
+public class File implements Serializable {
 
     @Id
-    @Schema(description = "Unique identifier of the file.", example = "665cb2ae437a4a0eebc8d6f3")
+    @Schema(description = "Unique identifier of the file.", example = "665cb2ae437a4a0eebc8d6f3", accessMode = Schema.AccessMode.READ_ONLY)
     private String id;
 
     @Field("name")
     @NotBlank(message = "File name must not be blank.")
     @Size(max = 255, message = "File name must be less than 255 characters.")
-    @Schema(description = "Original file name including extension.", example = "document.pdf", required = true)
+    @Schema(description = "Original file name including extension.", example = "document.pdf")
     private String name;
 
     @Field("content_type")
     @NotBlank(message = "Content type must not be blank.")
-    @Schema(description = "MIME type of the file.", example = "application/pdf", required = true)
+    @Schema(description = "MIME type of the file.", example = "application/pdf")
     private String contentType;
 
     @Field("size")
     @NotNull(message = "File size must not be null.")
-    @Schema(description = "Size of the file in bytes.", example = "1048576", required = true)
+    @Schema(description = "Size of the file in bytes.", example = "1048576")
     private Long size;
 
     @Field("uploaded_by")
@@ -51,24 +55,24 @@ public class File {
 
     @Field("created_at")
     @CreatedDate
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
-    @Schema(description = "Date the file was uploaded.", example = "2025-06-09T12:34:56.789Z", type = "string", format = "date-time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "Date the file was uploaded.", example = "2025-06-09 12:34:56", type = "string", format = "date-time")
     private Date createdAt;
 
     @Field("updated_at")
     @LastModifiedDate
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
-    @Schema(description = "Date of the last update of the file metadata.", example = "2025-06-10T08:30:00.000Z", type = "string", format = "date-time")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "Date of the last update of the file metadata.", example = "2025-06-10 08:30:00", type = "string", format = "date-time")
     private Date updatedAt;
 
     @Field("created_by")
     @CreatedBy
-    @Schema(description = "User who created this file record.", example = "admin@crm.com")
+    @Schema(description = "User who created this file record.", example = "665cb2ae437a4a0eebc8d6f5")
     private String createdBy;
 
     @Field("modified_by")
     @LastModifiedBy
-    @Schema(description = "User who last modified this file record.", example = "editor@crm.com")
+    @Schema(description = "User who last modified this file record.", example = "665cb2ae437a4a0eebc8d6f5")
     private String modifiedBy;
 
     @Field("storage_path")

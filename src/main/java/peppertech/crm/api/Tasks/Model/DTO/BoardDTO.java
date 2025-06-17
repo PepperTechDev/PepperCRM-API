@@ -29,7 +29,7 @@ public class BoardDTO implements Serializable {
     @NotBlank(message = "Board name is required.")
     @Size(max = 100, message = "Board name must be at most 100 characters.")
     @Schema(description = "Name of the board. This field is required.",
-            example = "Kanban Project", required = true)
+            example = "Kanban Project")
     private String name;
 
     @Size(max = 500, message = "Description must be at most 500 characters.")

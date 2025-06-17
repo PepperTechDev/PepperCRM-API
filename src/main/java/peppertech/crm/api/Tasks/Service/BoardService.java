@@ -14,8 +14,8 @@ import peppertech.crm.api.Tasks.Model.DTO.BoardDTO;
 import peppertech.crm.api.Tasks.Repository.BoardRepository;
 import peppertech.crm.api.Tasks.Validator.BoardValidatorI;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,8 +57,8 @@ public class BoardService implements BoardServiceI {
                     return dto;
                 })
                 .map(dto -> {
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    dto.setCreatedAt(formatter.format(new Date()));
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    dto.setCreatedAt(LocalDateTime.now().format(formatter));
                     return dto;
                 })
                 .map(boardMapper::toEntity)

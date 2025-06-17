@@ -19,9 +19,9 @@ import peppertech.crm.api.Users.Model.Entity.UserRole;
 import peppertech.crm.api.Users.Repository.UserRepository;
 import peppertech.crm.api.Users.Validator.UserValidatorI;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -100,8 +100,8 @@ public class UserService implements UserServiceI {
                     return ValidDTO;
                 })
                 .map(dto -> {
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    dto.setCreateAt(formatter.format(new Date()));
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    dto.setCreateAt(LocalDateTime.now().format(formatter));
                     return dto;
                 })
                 .map(mapperUser::toEntity)

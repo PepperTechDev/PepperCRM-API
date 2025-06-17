@@ -13,14 +13,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Representa un usuario en el sistema.
+ * Represents a user in the system.
  * <p>
- * Esta clase contiene los datos esenciales de un usuario, tales como nombre, apellido,
- * correo electrónico, contraseña, fecha de registro y rol. Se utiliza para almacenar y recuperar
- * la información de los usuarios desde la colección "usuarios" en MongoDB.
+ * This class contains the essential data of a user, such as first name, last name,
+ * email, password, registration date, and role. It is used to store and retrieve
+ * user information from the "users" collection in MongoDB.
  * <p>
- * La clase incluye validaciones para asegurar que los datos sean correctos antes de persistirlos.
- * Además, la contraseña se encripta antes de almacenarse en la base de datos, utilizando BCrypt.
+ * The class includes validations to ensure data correctness before persistence.
+ * Additionally, the password is encrypted using BCrypt before being stored in the database.
  */
 
 @Data
@@ -28,51 +28,75 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = "password")
-@Document(collection = "usuarios")
+@Document(collection = "users")
 public class User implements Serializable {
+
     /**
-     * TODO: Considerar implementar un método para hacer hash de la contraseña antes de almacenarla.
-     * ! Asegurarse de que los datos sensibles como contraseñas estén protegidos.
-     * ? ¿Qué medidas se tomarán si un usuario olvida su contraseña?
+     * TODO: Consider implementing a method to hash the password before storing it.
+     * ! Ensure sensitive data such as passwords are properly protected.
+     * ? What measures will be taken if a user forgets their password?
      */
 
     @Id
     @Field("_id")
     private ObjectId id;
 
-    @NotEmpty(message = "El nombre no puede estar vacío")
-    @Size(min = 4, max = 15, message = "El nombre debe tener entre 4 y 15 caracteres")
+    /**
+     * User's first name.
+     * Must not be empty and must contain between 4 and 15 characters.
+     */
+    @NotEmpty(message = "Name cannot be empty")
+    @Size(min = 4, max = 15, message = "Name must be between 4 and 15 characters")
     @Field("name")
     private String name;
 
-    @NotEmpty(message = "El apellido no puede estar vacío")
-    @Size(min = 4, max = 30, message = "El apellido debe tener entre 4 y 30 caracteres")
+    /**
+     * User's last name.
+     * Must not be empty and must contain between 4 and 30 characters.
+     */
+    @NotEmpty(message = "Last name cannot be empty")
+    @Size(min = 4, max = 30, message = "Last name must be between 4 and 30 characters")
     @Field("lastname")
     private String lastname;
 
-    @NotEmpty(message = "El email no puede estar vacío")
-    @Size(min = 14, max = 254, message = "El email debe tener entre 14 y 254 caracteres")
-    @Email(message = "El email debe ser válido")
+    /**
+     * User's email address.
+     * Must not be empty, must be valid, and unique.
+     */
+    @NotEmpty(message = "Email cannot be empty")
+    @Size(min = 14, max = 254, message = "Email must be between 14 and 254 characters")
+    @Email(message = "Email must be valid")
     @Indexed(unique = true)
     @Field("email")
     private String email;
 
-    @NotNull(message = "La fecha de registro no puede estar vacía")
+    /**
+     * Date the user was registered.
+     * Automatically set at the moment of creation.
+     */
+    @NotNull(message = "Registration date cannot be null")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Field("create_at")
     private Date createAt;
 
-    @NotEmpty(message = "La contraseña no puede estar vacío")
-
+    /**
+     * User's password.
+     * Must not be empty and must comply with the security policy:
+     * at least 8 characters, one uppercase letter, one lowercase letter,
+     * one number, and one special character.
+     */
+    @NotEmpty(message = "Password cannot be empty")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-            message = "La contraseña debe tener al menos 8 caracteres, " +
-                    "una letra mayúscula, una letra minúscula, " +
-                    "un número y un carácter especial.")
+            message = "Password must be at least 8 characters long, include an uppercase letter, "
+                    + "a lowercase letter, a number, and a special character.")
     @Field("password")
     private String password;
 
-    @NotEmpty(message = "El rol no puede estar vacío")
+    /**
+     * Role assigned to the user.
+     * Must not be empty.
+     */
+    @NotEmpty(message = "Role cannot be empty")
     @Field("role")
     private UserRole userRole;
 }
-

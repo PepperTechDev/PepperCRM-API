@@ -15,37 +15,62 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Represents a lead entity stored in the "leads" collection in MongoDB.
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "clientes")
-public class Lead {
+@Document(collection = "leads")
+public class Lead implements Serializable {
+
+    /**
+     * Unique identifier of the lead.
+     */
     @Id
     @Field("_id")
     private ObjectId id;
 
-    @NotEmpty(message = "El nombre no puede estar vacío")
-    @Size(min = 4, max = 15, message = "El nombre debe tener entre 4 y 15 caracteres")
+    /**
+     * First name of the lead.
+     * Must not be empty and must be between 4 and 15 characters.
+     */
+    @NotEmpty(message = "Name cannot be empty")
+    @Size(min = 4, max = 15, message = "Name must be between 4 and 15 characters")
     @Field("name")
     private String name;
 
-    @NotEmpty(message = "El apellido no puede estar vacío")
-    @Size(min = 4, max = 30, message = "El apellido debe tener entre 4 y 30 caracteres")
+    /**
+     * Last name of the lead.
+     * Must not be empty and must be between 4 and 30 characters.
+     */
+    @NotEmpty(message = "Last name cannot be empty")
+    @Size(min = 4, max = 30, message = "Last name must be between 4 and 30 characters")
     @Field("lastname")
     private String lastname;
 
-    @NotEmpty(message = "El email no puede estar vacío")
-    @Size(min = 14, max = 254, message = "El email debe tener entre 14 y 254 caracteres")
-    @Email(message = "El email debe ser válido")
+    /**
+     * Email address of the lead.
+     * Must not be empty, must be valid, and unique in the collection.
+     */
+    @NotEmpty(message = "Email cannot be empty")
+    @Size(min = 14, max = 254, message = "Email must be between 14 and 254 characters")
+    @Email(message = "Email must be valid")
     @Indexed(unique = true)
     @Field("email")
     private String email;
 
-    @NotNull(message = "La fecha de registro no puede estar vacía")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    /**
+     * Date the lead was registered.
+     * Must not be null.
+     * Formatted as ISO 8601 with milliseconds and timezone.
+     */
+    @NotNull(message = "Registration date cannot be null")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Field("create_at")
     private Date createAt;
 }

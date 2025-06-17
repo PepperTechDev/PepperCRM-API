@@ -2,7 +2,10 @@ package peppertech.crm.api.Tasks.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -61,20 +64,20 @@ public class Board implements Serializable {
     private ProjectStatus status;
 
     @PastOrPresent(message = "Creation date cannot be in the future")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX", timezone = "UTC")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Field("created_at")
     @Schema(description = "Timestamp when the board was created.",
             example = "2025-06-09T12:00:00.000Z", type = "string", format = "date-time", accessMode = Schema.AccessMode.READ_ONLY)
     private Date createdAt;
 
     @NotNull(message = "Start date cannot be null")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Field("start_date")
     @Schema(description = "Start date of the project.",
             example = "2025-06-10", type = "string", format = "date")
     private Date startDate;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Field("end_date")
     @Schema(description = "Estimated end date of the project.",
             example = "2025-12-31", type = "string", format = "date")
