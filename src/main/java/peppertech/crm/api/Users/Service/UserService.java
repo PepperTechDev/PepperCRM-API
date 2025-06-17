@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 public class UserService implements UserServiceI {
 
     private final UserRepository repositoryUser;
-    private final UserMapper userMapper;
+    private final UserMapper mapperUser;
     private final UserValidatorI validatorUser;
 
     /**
@@ -48,9 +48,9 @@ public class UserService implements UserServiceI {
      * @param validatorUser  validador que valida los datos de usuario.
      */
     @Autowired
-    public UserService(UserRepository repositoryUser, UserMapper userMapper, UserValidatorI validatorUser) {
+    public UserService(UserRepository repositoryUser, UserMapper mapperUser, UserValidatorI validatorUser) {
         this.repositoryUser = repositoryUser;
-        this.userMapper = userMapper;
+        this.mapperUser = mapperUser;
         this.validatorUser = validatorUser;
     }
 
@@ -83,7 +83,7 @@ public class UserService implements UserServiceI {
      */
     @Override
     @Transactional
-    @CachePut(value = "users", key = "#userDTO.id")
+    @CachePut(value = "users", key = "#result.id")
     public UserDTO CreateUser(UserDTO userDTO) throws ValidationException, IllegalStateException {
         return Optional.of(userDTO)
                 .filter(dto -> !repositoryUser.existsByEmail(dto.getEmail()))
@@ -104,10 +104,10 @@ public class UserService implements UserServiceI {
                     dto.setCreateAt(formatter.format(new Date()));
                     return dto;
                 })
-                .map(userMapper::toEntity)
+                .map(mapperUser::toEntity)
                 .map(repositoryUser::save)
-                .map(userMapper::toDTO)
-                .orElseThrow(() -> new IllegalStateException("El Usuario ya existe"));
+                .map(mapperUser::toDTO)
+                .orElseThrow(() -> new IllegalStateException("User already exists."));
     }
 
 
@@ -128,9 +128,9 @@ public class UserService implements UserServiceI {
         return Optional.of(repositoryUser.findAll())
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.stream()
-                        .map(userMapper::toDTO)
+                        .map(mapperUser::toDTO)
                         .collect(Collectors.toList()))
-                .orElseThrow(() -> new Exception("No existe ningún usuario"));
+                .orElseThrow(() -> new Exception("No users found."));
     }
 
     /**
@@ -162,9 +162,8 @@ public class UserService implements UserServiceI {
                 })
                 .map(repositoryUser::findById)
                 .filter(Optional::isPresent)
-                .map(Optional::get)
-                .map(userMapper::toDTO)
-                .orElseThrow(() -> new Exception("El Usuario no existe"));
+                .map(mapperUser::toDTO)
+                .orElseThrow(() -> new Exception("User does not exist."));
     }
 
     /**
@@ -198,8 +197,8 @@ public class UserService implements UserServiceI {
                 .map(repositoryUser::findByEmail)
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.get(0))
-                .map(userMapper::toDTO)
-                .orElseThrow(() -> new Exception("El usuario no existe"));
+                .map(mapperUser::toDTO)
+                .orElseThrow(() -> new Exception("No users found with the specified email."));
     }
 
     /**
@@ -233,9 +232,9 @@ public class UserService implements UserServiceI {
                 .map(repositoryUser::findByName)
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.stream()
-                        .map(userMapper::toDTO)
+                        .map(mapperUser::toDTO)
                         .collect(Collectors.toList()))
-                .orElseThrow(() -> new Exception("No existe ningún usuario con el nombre"));
+                .orElseThrow(() -> new Exception("No users found with the specified first name."));
     }
 
     /**
@@ -269,9 +268,9 @@ public class UserService implements UserServiceI {
                 .map(repositoryUser::findByLastname)
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.stream()
-                        .map(userMapper::toDTO)
+                        .map(mapperUser::toDTO)
                         .collect(Collectors.toList()))
-                .orElseThrow(() -> new Exception("No existe ningún usuario con el apellido"));
+                .orElseThrow(() -> new Exception("No users found with the specified last name."));
     }
 
     /**
@@ -305,9 +304,9 @@ public class UserService implements UserServiceI {
                 .map(repositoryUser::findByRole)
                 .filter(users -> !users.isEmpty())
                 .map(users -> users.stream()
-                        .map(userMapper::toDTO)
+                        .map(mapperUser::toDTO)
                         .collect(Collectors.toList()))
-                .orElseThrow(() -> new Exception("No existe ningún usuario con el rol"));
+                .orElseThrow(() -> new Exception("No users found with the specified role."));
     }
 
     /**
@@ -329,7 +328,7 @@ public class UserService implements UserServiceI {
                                 .collect(Collectors.toList())
                 )
                 .filter(roles -> !roles.isEmpty())
-                .orElseThrow(() -> new Exception("No existe ningún rol"));
+                .orElseThrow(() -> new Exception("No roles found."));
     }
 
     /**
@@ -384,10 +383,10 @@ public class UserService implements UserServiceI {
                     validatorUser.Reset();
                     return dto;
                 })
-                .map(userMapper::toEntity)
+                .map(mapperUser::toEntity)
                 .map(repositoryUser::save)
-                .map(userMapper::toDTO)
-                .orElseThrow(() -> new Exception("El usuario no se pudo actualizar"));
+                .map(mapperUser::toDTO)
+                .orElseThrow(() -> new Exception("The user could not be updated."));
     }
 
     /**
@@ -417,9 +416,9 @@ public class UserService implements UserServiceI {
         return Optional.of(getUserById(id))
                 .map(user -> {
                     repositoryUser.deleteById(new ObjectId(user.getId()));
-                    return "El Usuario con ID '" + id + "' fue eliminado.";
+                    return "The user with ID '" + id + "' has been deleted.";
                 })
-                .orElseThrow(() -> new Exception("El Usuario no existe."));
+                .orElseThrow(() -> new Exception("User not found."));
     }
 
     /**
@@ -443,7 +442,7 @@ public class UserService implements UserServiceI {
                         .username(user.getEmail())
                         .password(user.getPassword())
                         .build())
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el email: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
     }
 }
 

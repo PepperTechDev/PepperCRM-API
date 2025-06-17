@@ -44,10 +44,10 @@ public class EmailValidator implements EmailValidatorI{
     @Override
     public void validateId(String id) {
         if (id == null || id.isEmpty()) {
-            errors.add("El Id no puede estar vacío.");
+            errors.add("The ID cannot be empty.");
             valid = false;
         } else if (!ObjectId.isValid(id)) {
-            errors.add("El Id debe ser un hexadecimal de 24 caracteres.");
+            errors.add("The ID must be a 24-character hexadecimal string.");
             valid = false;
         }
     }
@@ -55,10 +55,10 @@ public class EmailValidator implements EmailValidatorI{
     @Override
     public void validateRecipient(String recipient) {
         if (recipient == null || recipient.isEmpty()) {
-            errors.add("El destinatario no puede estar vacío.");
+            errors.add("The recipient cannot be empty.");
             valid = false;
         } else if (!Pattern.matches(EMAIL_PATTERN, recipient)) {
-            errors.add("El correo del destinatario no es válido.");
+            errors.add("The recipient email is not valid.");
             valid = false;
         }
     }
@@ -66,7 +66,7 @@ public class EmailValidator implements EmailValidatorI{
     @Override
     public void validateSubject(String subject) {
         if (subject != null && subject.length() > SUBJECT_MAX_LENGTH) {
-            errors.add("El asunto no puede tener más de " + SUBJECT_MAX_LENGTH + " caracteres.");
+            errors.add("The subject cannot be more than " + SUBJECT_MAX_LENGTH + " characters.");
             valid = false;
         }
     }
@@ -74,7 +74,7 @@ public class EmailValidator implements EmailValidatorI{
     @Override
     public void validateMsgBody(String msgBody) {
         if (msgBody != null && msgBody.length() > BODY_MAX_LENGTH) {
-            errors.add("El mensaje no puede tener más de " + BODY_MAX_LENGTH + " caracteres.");
+            errors.add("The message cannot be more than " + BODY_MAX_LENGTH + " characters.");
             valid = false;
         }
     }
@@ -83,7 +83,7 @@ public class EmailValidator implements EmailValidatorI{
     public void validateAttachment(String attachment) {
         if (attachment != null && !attachment.isEmpty()) {
             if (!attachment.startsWith("http://") && !attachment.startsWith("https://")) {
-                errors.add("El enlace del adjunto debe ser una URL válida (http o https).");
+                errors.add("The attachment link must be a valid URL (http or https).");
                 valid = false;
             }
         }

@@ -1,5 +1,6 @@
 package peppertech.crm.api.Mails.Service;
 
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;

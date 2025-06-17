@@ -14,31 +14,32 @@ import java.util.stream.Collectors;
 import static peppertech.crm.api.Users.Validator.UserRegex.*;
 
 /**
- * Validation class for users.
+ * Clase de validación para los usuarios.
  * <p>
- * This class provides methods to validate different user fields, such as ID, name, lastname, email,
- * password, and role. If any field does not meet the defined restrictions, errors are added to the error list.
+ * Esta clase proporciona métodos para validar diferentes campos de un usuario, como el ID, nombre, apellido, correo electrónico,
+ * contraseña y rol. Si algún campo no cumple con las restricciones definidas, se añaden errores a la lista de errores.
  * </p>
  * <p>
- * The validation methods return errors as a list of strings and maintain a validity state.
+ * Los métodos de validación devuelven los errores como una lista de cadenas y mantienen un estado de validez.
  * </p>
  */
 @Component
 public class UserValidator implements UserValidatorI {
 
     /**
-     * Indicates if the validation was successful.
+
+     * Indica si la validación fue exitosa.
      */
     public boolean valid;
 
     /**
-     * List of validation errors.
+     * Lista de errores de validación.
      */
     public List<String> errors;
 
     /**
-     * Constructor for the user validation class.
-     * Initializes the validation state as "valid" and creates an empty error list.
+     * Constructor de la clase de validación de usuario.
+     * Inicializa el estado de validación a "válido" y crea una lista vacía de errores.
      */
     public UserValidator() {
         this.valid = true;
@@ -46,9 +47,9 @@ public class UserValidator implements UserValidatorI {
     }
 
     /**
-     * Returns the validity state.
+     * Devuelve el estado de validez.
      *
-     * @return <code>true</code> if the user is valid, <code>false</code> if there are validation errors.
+     * @return <code>true</code> si el usuario es válido, <code>false</code> si hay errores de validación.
      */
     @Override
     public boolean isValid() {
@@ -56,9 +57,9 @@ public class UserValidator implements UserValidatorI {
     }
 
     /**
-     * Gets the list of errors found during validation.
+     * Obtiene la lista de errores encontrados durante la validación.
      *
-     * @return A list of strings with the error messages.
+     * @return Una lista de cadenas con los mensajes de error.
      */
     @Override
     public List<String> getErrors() {
@@ -68,26 +69,26 @@ public class UserValidator implements UserValidatorI {
     }
 
     /**
-     * Validates a user's ID.
+     * Válida el ID de un usuario.
      * <p>
-     * The ID must be a non-empty string and a valid 24-character hexadecimal identifier.
+     * El ID debe ser una cadena no vacía y debe ser un identificador hexadecimal válido de 24 caracteres.
      * </p>
      *
-     * @param id The unique identifier of the user to validate.
+     * @param id El identificador único del usuario a validar.
      */
     @Override
     public void validateId(String id) {
         if (id == null || id.isEmpty()) {
-            errors.add("Id cannot be empty");
+            errors.add("The ID cannot be empty");
             valid = false;
         } else if (!ObjectId.isValid(id)) {
-            errors.add("Id must be a 24-character hexadecimal");
+            errors.add("The ID must be a 24-character hexadecimal string");
             valid = false;
         }
     }
 
     /**
-     * Resets the validation state, marking the user as valid and clearing the error list.
+     * Resetea el estado de la validación, marcando el usuario como válido y limpiando la lista de errores.
      */
     @Override
     public void Reset() {
@@ -96,81 +97,81 @@ public class UserValidator implements UserValidatorI {
     }
 
     /**
-     * Validates a user's name.
+     * Válida el nombre de un usuario.
      * <p>
-     * The name must be between 4 and 15 characters and contain only letters.
+     * El nombre debe tener entre 4 y 15 caracteres y solo puede contener letras.
      * </p>
      *
-     * @param name The user's name to validate.
+     * @param name El nombre del usuario a validar.
      */
     @Override
     public void validateName(String name) {
         if (name == null || !Pattern.matches(NAME_PATTERN, name)) {
             valid = false;
-            errors.add("Name must be between 4 and 15 characters and only letters");
+            errors.add("The first name must have between 4 and 15 characters and contain only letters");
         }
     }
 
     /**
-     * Validates a user's lastname.
+     * Válida el apellido de un usuario.
      * <p>
-     * The lastname must be between 4 and 30 characters.
+     * El apellido debe tener entre 4 y 30 caracteres.
      * </p>
      *
-     * @param lastname The user's lastname to validate.
+     * @param lastname El apellido del usuario a validar.
      */
     @Override
     public void validateLastname(String lastname) {
         if (lastname == null || !Pattern.matches(LASTNAME_PATTERN, lastname)) {
             valid = false;
-            errors.add("Lastname must be between 4 and 30 characters");
+            errors.add("The last name must have between 4 and 30 characters");
         }
     }
 
     /**
-     * Validates a user's email.
+     * Válida el correo electrónico de un usuario.
      * <p>
-     * The email must follow a valid email format pattern.
+     * El correo electrónico debe seguir un patrón de formato válido de correo electrónico.
      * </p>
      *
-     * @param email The user's email to validate.
+     * @param email El correo electrónico del usuario a validar.
      */
     @Override
     public void validateEmail(String email) {
         if (email == null || !Pattern.matches(EMAIL_PATTERN, email)) {
             valid = false;
-            errors.add("Email is not valid");
+            errors.add("The email is not valid");
         }
     }
 
     /**
-     * Validates a user's password.
+     * Válida la contraseña de un usuario.
      * <p>
-     * The password must have at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character.
+     * La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.
      * </p>
      *
-     * @param password The user's password to validate.
+     * @param password La contraseña del usuario a validar.
      */
     @Override
     public void validatePassword(String password) {
         if (password == null || !Pattern.matches(PASSWORD_PATTERN, password)) {
             valid = false;
-            errors.add("Password must have at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character");
+            errors.add("The password must have at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character");
         }
     }
 
     /**
-     * Validates a user's role.
+     * Válida el rol de un usuario.
      * <p>
-     * The role must be one of the roles defined in the system. If the role is not valid, an error is added to the list.
+     * El rol debe ser uno de los roles definidos en el sistema. Si el rol no es válido, se añade un error a la lista.
      * </p>
      *
-     * @param role The user's role to validate.
+     * @param role El rol del usuario a validar.
      */
     @Override
     public void validateRole(String role) {
         if (role == null || role.isEmpty()) {
-            errors.add("Role cannot be empty");
+            errors.add("The role cannot be empty");
             valid = false;
             return;
         }
@@ -179,7 +180,7 @@ public class UserValidator implements UserValidatorI {
                 .map(Enum::name).collect(Collectors.toSet());
 
         if (!validRoles.contains(role)) {
-            errors.add("Role must be one of the following: " + String.join(", ", validRoles));
+            errors.add("The role must be one of the following: " + String.join(", ", validRoles));
             valid = false;
         }
     }

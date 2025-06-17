@@ -3,104 +3,104 @@ package peppertech.crm.api.Users.Validator;
 import java.util.List;
 
 /**
- * Interface for user data validation.
+ * Interfaz para la validación de los datos de un usuario.
  * <p>
- * This interface defines the necessary methods to validate common user fields, such as ID, first name, last name,
- * email, password, and role. It is implemented by classes that provide the concrete validation logic, such as {@link UserValidator}.
+ * Esta interfaz define los métodos necesarios para validar los campos comunes de un usuario, como el ID, nombre, apellido,
+ * correo electrónico, contraseña y rol. Implementada por clases que proporcionan la lógica de validación concreta, como {@link UserValidator}.
  * </p>
  */
 public interface UserValidatorI {
 
     /**
-     * Validates a user's ID.
+     * Válida el ID de un usuario.
      * <p>
-     * The ID must be a unique and valid identifier. This method checks that the ID is properly formed
-     * according to established rules (for example, a 24-character hexadecimal identifier).
+     * El ID debe ser un identificador único y válido. Este método verifica que el ID esté correctamente formado
+     * según las reglas establecidas (por ejemplo, un identificador hexadecimal de 24 caracteres).
      * </p>
      *
-     * @param id The unique identifier of the user to validate.
+     * @param id El identificador único del usuario a validar.
      */
     void validateId(String id);
 
     /**
-     * Resets the validation state.
+     * Resetea el estado de la validación.
      * <p>
-     * This method resets the validity state to "valid" and clears the error list.
+     * Este método restablece el estado de validez a "válido" y limpia la lista de errores.
      * </p>
      */
     void Reset();
 
     /**
-     * Validates a user's first name.
+     * Válida el nombre de un usuario.
      * <p>
-     * The name must meet a specific pattern that may include a range of characters (for example, between 4 and 15 characters),
-     * and must contain only letters.
+     * El nombre debe cumplir con un patrón específico que puede incluir un rango de caracteres (por ejemplo, entre 4 y 15 caracteres),
+     * y solo debe contener letras.
      * </p>
      *
-     * @param name The user's first name to validate.
+     * @param name El nombre del usuario a validar.
      */
     void validateName(String name);
 
     /**
-     * Validates a user's last name.
+     * Válida el apellido de un usuario.
      * <p>
-     * The last name must meet a specific pattern (for example, between 4 and 30 characters).
+     * El apellido debe cumplir con un patrón específico (por ejemplo, entre 4 y 30 caracteres).
      * </p>
      *
-     * @param lastname The user's last name to validate.
+     * @param lastname El apellido del usuario a validar.
      */
     void validateLastname(String lastname);
 
     /**
-     * Validates a user's email.
+     * Válida el correo electrónico de un usuario.
      * <p>
-     * The email must follow a standard format pattern (for example, it must contain an "@" and a valid domain).
+     * El correo electrónico debe seguir un patrón de formato estándar (por ejemplo, debe contener una "@" y un dominio válido).
      * </p>
      *
-     * @param email The user's email to validate.
+     * @param email El correo electrónico del usuario a validar.
      */
     void validateEmail(String email);
 
     /**
-     * Validates a user's password.
+     * Válida la contraseña de un usuario.
      * <p>
-     * The password must meet certain restrictions, such as a minimum length, at least one uppercase letter,
-     * one lowercase letter, one number, and one special character.
+     * La contraseña debe cumplir con ciertas restricciones, como una longitud mínima, al menos una letra mayúscula,
+     * una letra minúscula, un número y un carácter especial.
      * </p>
      *
-     * @param password The user's password to validate.
+     * @param password La contraseña del usuario a validar.
      */
     void validatePassword(String password);
 
     /**
-     * Validates a user's role.
+     * Válida el rol de un usuario.
      * <p>
-     * The role must be one of the predefined roles in the system. This method ensures that the provided role
-     * matches the valid available roles.
+     * El rol debe ser uno de los roles predefinidos en el sistema. Este método asegura que el rol proporcionado
+     * coincida con los roles válidos disponibles.
      * </p>
      *
-     * @param role The user's role to validate.
+     * @param role El rol del usuario a validar.
      */
     void validateRole(String role);
 
     /**
-     * Returns the validity state.
+     * Devuelve el estado de validez.
      * <p>
-     * This method returns <code>true</code> if all fields are valid (no errors), and <code>false</code>
-     * if any validation error has been found.
+     * Este método devuelve <code>true</code> si todos los campos son válidos (sin errores), y <code>false</code>
+     * si se ha encontrado algún error de validación.
      * </p>
      *
-     * @return <code>true</code> if the user is valid, <code>false</code> if there are validation errors.
+     * @return <code>true</code> si el usuario es válido, <code>false</code> si hay errores de validación.
      */
     boolean isValid();
 
     /**
-     * Gets the list of errors found during validation.
+     * Obtiene la lista de errores encontrados durante la validación.
      * <p>
-     * This method returns a list with the error messages generated during the validation of the fields.
+     * Este método devuelve una lista con los mensajes de error generados durante la validación de los campos.
      * </p>
      *
-     * @return A list of strings with the error messages.
+     * @return Una lista de cadenas con los mensajes de error.
      */
     List<String> getErrors();
 }

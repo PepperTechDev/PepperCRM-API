@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EmailServiceI {
 
-    EmailDTO sendSimpleMail(EmailDTO emailDTO) ;
+    EmailDTO sendSimpleMail(EmailDTO emailDTO);
 
     EmailDTO sendMailWithAttachment(EmailDTO emailDTO);
 
