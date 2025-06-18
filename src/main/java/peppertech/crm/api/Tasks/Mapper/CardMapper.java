@@ -3,6 +3,7 @@ package peppertech.crm.api.Tasks.Mapper;
 import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import peppertech.crm.api.Tasks.Model.DTO.CardDTO;
 import peppertech.crm.api.Tasks.Model.Entity.Card;
 
@@ -42,32 +43,32 @@ public interface CardMapper {
     @Mapping(source = "tags", target = "tags", qualifiedByName = "stringListToObjectIdList")
     Card toEntity(CardDTO DTO);
 
-    @org.mapstruct.Named("objectIdToString")
+    @Named("objectIdToString")
     default String objectIdToString(ObjectId objectId) {
         return objectId != null ? objectId.toHexString() : null;
     }
 
-    @org.mapstruct.Named("stringToObjectId")
+    @Named("stringToObjectId")
     default ObjectId stringToObjectId(String id) {
         return id != null ? new ObjectId(id) : null;
     }
 
-    @org.mapstruct.Named("dateToString")
+    @Named("dateToString")
     default String dateToString(Date date) {
         return date != null ? new SimpleDateFormat("yyyy-MM-dd").format(date) : null;
     }
 
-    @org.mapstruct.Named("stringToDate")
+    @Named("stringToDate")
     default Date stringToDate(String dateString) throws Exception {
         return dateString != null ? new SimpleDateFormat("yyyy-MM-dd").parse(dateString) : null;
     }
 
-    @org.mapstruct.Named("stringListToObjectIdList")
+    @Named("stringListToObjectIdList")
     default List<ObjectId> stringListToObjectIdList(List<String> ids) {
         return ids != null ? ids.stream().map(ObjectId::new).collect(Collectors.toList()) : null;
     }
 
-    @org.mapstruct.Named("objectIdListToStringList")
+    @Named("objectIdListToStringList")
     default List<String> objectIdListToStringList(List<ObjectId> ids) {
         return ids != null ? ids.stream().map(ObjectId::toHexString).collect(Collectors.toList()) : null;
     }

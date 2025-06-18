@@ -14,9 +14,12 @@ import peppertech.crm.api.Mails.Model.DTO.EmailDTO;
 import peppertech.crm.api.Mails.Service.EmailServiceI;
 import peppertech.crm.api.Responses.ErrorResponse;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @RestController
 @RequestMapping("/Emails")
-@Tag(name = "Correos", description = "Operaciones relacionadas con correos")
+@Tag(name = "Emails", description = "Post-related operations")
 public class EmailController {
     private final EmailServiceI emailServiceI;
 
@@ -84,9 +87,18 @@ public class EmailController {
             })
     public ResponseEntity<?> sendAndSaveMail(@RequestBody EmailDTO emailDetails) {
         try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            emailDetails.setSendDate(formatter.format(new Date()));
+            emailDetails.setSent("true");
             return new ResponseEntity<>(emailServiceI.sendSimpleMail(emailDetails), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse("Error sending email: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/schedule")
+    public ResponseEntity<EmailDTO> scheduleEmail(@RequestBody EmailDTO emailDTO) {
+        EmailDTO scheduled = emailServiceI.scheduleEmail(emailDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(scheduled);
     }
 }

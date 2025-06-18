@@ -1,10 +1,12 @@
 package peppertech.crm.api.Tasks.Service;
 
 import jakarta.validation.ValidationException;
+import org.springframework.stereotype.Service;
 import peppertech.crm.api.Tasks.Model.DTO.ColumnDTO;
 
 import java.util.List;
 
+@Service
 public class ColumnService implements ColumnServiceI {
     @Override
     public ColumnDTO createColumn(ColumnDTO columnDTO) throws ValidationException {

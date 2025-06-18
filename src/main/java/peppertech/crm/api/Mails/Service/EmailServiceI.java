@@ -11,4 +11,6 @@ public interface EmailServiceI {
     EmailDTO sendMailWithAttachment(EmailDTO emailDTO);
 
     List<EmailDTO> getAllMails() throws Exception;
+
+    EmailDTO scheduleEmail(EmailDTO emailDTO);
 }

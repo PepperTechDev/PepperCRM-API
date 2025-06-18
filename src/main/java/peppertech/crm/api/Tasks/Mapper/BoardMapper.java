@@ -3,6 +3,7 @@ package peppertech.crm.api.Tasks.Mapper;
 import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import peppertech.crm.api.Tasks.Model.DTO.BoardDTO;
 import peppertech.crm.api.Tasks.Model.Entity.Board;
 import peppertech.crm.api.Tasks.Model.Entity.ProjectStatus;
@@ -37,17 +38,17 @@ public interface BoardMapper {
     @Mapping(source = "columns", target = "columns", qualifiedByName = "objectIdListToStringList")
     BoardDTO toDTO(Board board);
 
-    @org.mapstruct.Named("objectIdToString")
+    @Named("objectIdToString")
     default String objectIdToString(ObjectId objectId) {
         return objectId != null ? objectId.toHexString() : null;
     }
 
-    @org.mapstruct.Named("stringToObjectId")
+    @Named("stringToObjectId")
     default ObjectId stringToObjectId(String id) {
         return id != null ? new ObjectId(id) : null;
     }
 
-    @org.mapstruct.Named("stringListToObjectIdList")
+    @Named("stringListToObjectIdList")
     default java.util.List<ObjectId> stringListToObjectIdList(java.util.List<String> ids) {
         if (ids == null) return null;
         java.util.List<ObjectId> list = new java.util.ArrayList<>();
@@ -57,7 +58,7 @@ public interface BoardMapper {
         return list;
     }
 
-    @org.mapstruct.Named("objectIdListToStringList")
+    @Named("objectIdListToStringList")
     default java.util.List<String> objectIdListToStringList(java.util.List<ObjectId> ids) {
         if (ids == null) return null;
         java.util.List<String> list = new java.util.ArrayList<>();
@@ -67,26 +68,26 @@ public interface BoardMapper {
         return list;
     }
 
-    @org.mapstruct.Named("stringToDate")
+    @Named("stringToDate")
     default Date stringToDate(String dateString) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return formatter.parse(dateString);
     }
 
-    @org.mapstruct.Named("dateToString")
+    @Named("dateToString")
     default String dateToString(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return formatter.format(date);
 
     }
 
-    @org.mapstruct.Named("stringToProjectStatus")
+    @Named("stringToProjectStatus")
     default ProjectStatus stringToProjectStatus(String status) {
         if (status == null) return null;
         return ProjectStatus.valueOf(status.toUpperCase());
     }
 
-    @org.mapstruct.Named("projectStatusToString")
+    @Named("projectStatusToString")
     default String projectStatusToString(ProjectStatus status) {
         return status != null ? status.name() : null;
     }

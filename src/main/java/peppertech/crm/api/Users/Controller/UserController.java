@@ -27,7 +27,7 @@ import peppertech.crm.api.Users.Service.UserServiceI;
 @RestController
 @RequestMapping("/Users")
 @CacheConfig(cacheNames = "users")
-@Tag(name = "Usuarios", description = "Operaciones relacionadas con usuarios")
+@Tag(name = "Users", description = "User-related operations")
 public class UserController {
     /**
      * TODO: Refactorizar métodos para lanzar excepciones personalizadas en lugar de manejar errores con try-catch.

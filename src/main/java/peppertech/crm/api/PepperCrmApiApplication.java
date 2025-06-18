@@ -7,11 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication(scanBasePackages = "peppertech.crm.api")
 @EnableMongoRepositories(basePackages = "peppertech.crm.api")
 @EnableCaching
+@EnableScheduling
 @Slf4j
 public class PepperCrmApiApplication {
 

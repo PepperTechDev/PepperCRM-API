@@ -3,6 +3,7 @@ package peppertech.crm.api.Tasks.Mapper;
 import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import peppertech.crm.api.Tasks.Model.DTO.SubtaskDTO;
 import peppertech.crm.api.Tasks.Model.Entity.Subtask;
 
@@ -26,23 +27,23 @@ public interface SubtaskMapper {
     @Mapping(source = "closedDate", target = "closedDate", qualifiedByName = "stringToDate")
     Subtask toEntity(SubtaskDTO dto);
 
-    @org.mapstruct.Named("objectIdToString")
+    @Named("objectIdToString")
     default String objectIdToString(ObjectId objectId) {
         return objectId != null ? objectId.toHexString() : null;
     }
 
-    @org.mapstruct.Named("stringToObjectId")
+    @Named("stringToObjectId")
     default ObjectId stringToObjectId(String id) {
         return id != null ? new ObjectId(id) : null;
     }
 
-    @org.mapstruct.Named("dateToString")
+    @Named("dateToString")
     default String dateToString(Date date) {
         if (date == null) return null;
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").format(date);
     }
 
-    @org.mapstruct.Named("stringToDate")
+    @Named("stringToDate")
     default Date stringToDate(String date) {
         try {
             return date != null ? new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").parse(date) : null;

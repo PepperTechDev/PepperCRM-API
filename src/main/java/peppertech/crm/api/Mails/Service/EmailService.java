@@ -11,12 +11,15 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import peppertech.crm.api.Mails.Mapper.EmailMapper;
 import peppertech.crm.api.Mails.Model.DTO.EmailDTO;
+import peppertech.crm.api.Mails.Model.Entity.EmailDetails;
 import peppertech.crm.api.Mails.Repository.EmailRepository;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,13 +55,28 @@ public class EmailService implements EmailServiceI {
                         javaMailSender.send(mailMessage);
                         emailRepository.save(emailDetails);
                     } catch (Exception e) {
-                        throw new ValidationException("Error al Enviar Correo " + e.getMessage());
+                        throw new ValidationException("Error sending email " + e.getMessage());
                     }
                     return emailDetails;
                 })
                 .map(emailRepository::save)
                 .map(emailMapper::toDTO)
-                .orElseThrow(() -> new IllegalStateException("Error al enviar el correo"));
+                .orElseThrow(() -> new IllegalStateException("Error sending email"));
+    }
+
+    @Override
+    public EmailDTO scheduleEmail(EmailDTO emailDTO) {
+        return Optional.of(emailDTO)
+                .map(emailMapper::toEntity)
+                .map(emailDetails -> {
+                    if (emailDetails.getSendDate() == null) {
+                        throw new ValidationException("Send date must be provided.");
+                    }
+                    emailRepository.save(emailDetails);
+                    return emailDetails;
+                })
+                .map(emailMapper::toDTO)
+                .orElseThrow(() -> new IllegalStateException("Failed to schedule email"));
     }
 
     @Override
@@ -79,13 +97,13 @@ public class EmailService implements EmailServiceI {
                         javaMailSender.send(mimeMessage);
                         emailRepository.save(emailDetails);
                     } catch (Exception e) {
-                        throw new ValidationException("Error al Enviar Correo " + e.getMessage());
+                        throw new ValidationException("Error sending email " + e.getMessage());
                     }
                     return emailDetails;
                 })
                 .map(emailRepository::save)
                 .map(emailMapper::toDTO)
-                .orElseThrow(() -> new IllegalStateException("Error al enviar el correo"));
+                .orElseThrow(() -> new IllegalStateException("Error sending email with attachment"));
     }
 
     /**
@@ -109,6 +127,34 @@ public class EmailService implements EmailServiceI {
                 .map(emails -> emails.stream()
                         .map(emailMapper::toDTO)
                         .collect(Collectors.toList()))
-                .orElseThrow(() -> new Exception("No existe ningún correo"));
+                .orElseThrow(() -> new Exception("There is no email"));
+    }
+
+    @Scheduled(fixedRate = 60000) // Runs every minute
+    public void processScheduledEmails() {
+        Date now = new Date();
+
+        List<EmailDetails> emailsToSend = emailRepository.findAll().stream()
+                .filter(email -> email.getSendDate() != null)
+                .filter(email -> !email.getSent()) // Only unsent emails
+                .filter(email -> {
+                    long diff = email.getSendDate().getTime() - now.getTime();
+                    return diff <= 10 * 60 * 1000 && diff > 0; // Within 10 minutes
+                })
+                .toList();
+
+        emailsToSend.forEach(email -> {
+            try {
+                EmailDTO dto = emailMapper.toDTO(email);
+                sendSimpleMail(dto);
+
+                email.setSent(true);
+                emailRepository.save(email);
+
+                log.info("Scheduled email sent to {}", dto.getRecipient());
+            } catch (Exception e) {
+                log.error("Error sending scheduled email: {}", e.getMessage());
+            }
+        });
     }
 }

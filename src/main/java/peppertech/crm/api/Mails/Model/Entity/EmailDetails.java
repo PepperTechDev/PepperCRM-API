@@ -1,5 +1,7 @@
 package peppertech.crm.api.Mails.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -30,4 +33,10 @@ public class EmailDetails implements Serializable {
 
     @Field("attachment")
     private String attachment;
+
+    @Field("send_date")
+    private Date sendDate;
+
+    @Field("sent")
+    private Boolean sent;
 }
