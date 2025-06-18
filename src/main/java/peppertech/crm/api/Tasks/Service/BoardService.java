@@ -66,7 +66,7 @@ public class BoardService implements BoardServiceI {
                 .map(boardMapper::toEntity)
                 .map(boardRepository::save)
                 .map(boardMapper::toDTO)
-                .orElseThrow(() -> new IllegalStateException("The Board could not be created\n"));
+                .orElseThrow(() -> new IllegalStateException("The Board could not be created"));
     }
 
     @Override
