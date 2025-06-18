@@ -22,42 +22,42 @@ public class CardService implements CardServiceI {
     }
 
     @Override
-    public CardDTO createTask(CardDTO cardDTO) throws ValidationException {
+    public CardDTO createCard(CardDTO cardDTO) throws ValidationException {
         return null;
     }
 
     @Override
-    public List<CardDTO> getAllTasks() throws Exception {
+    public List<CardDTO> getAllCards() throws Exception {
         return List.of();
     }
 
     @Override
-    public CardDTO getTaskById(String id) throws Exception {
+    public CardDTO getCardById(String id) throws Exception {
         return null;
     }
 
     @Override
-    public List<CardDTO> getTasksByTitle(String title) throws Exception {
+    public List<CardDTO> getCardsByTitle(String title) throws Exception {
         return List.of();
     }
 
     @Override
-    public List<CardDTO> getTasksByUserId(String userId) throws Exception {
+    public List<CardDTO> getCardsByUserId(String userId) throws Exception {
         return List.of();
     }
 
     @Override
-    public List<CardDTO> getTasksByPriority(String priority) throws Exception {
+    public List<CardDTO> getCardsByPriority(String priority) throws Exception {
         return List.of();
     }
 
     @Override
-    public CardDTO updateTask(String id, CardDTO updatedTask) throws Exception {
+    public CardDTO updateCard(String id, CardDTO updatedCard) throws Exception {
         return null;
     }
 
     @Override
-    public String deleteTask(String id) throws Exception {
+    public String deleteCard(String id) throws Exception {
         return "";
     }
 }

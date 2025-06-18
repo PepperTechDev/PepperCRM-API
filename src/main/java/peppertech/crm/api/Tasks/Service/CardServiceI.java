@@ -6,19 +6,19 @@ import peppertech.crm.api.Tasks.Model.DTO.CardDTO;
 import java.util.List;
 
 public interface CardServiceI {
-    CardDTO createTask(CardDTO cardDTO) throws ValidationException;
+    CardDTO createCard(CardDTO cardDTO) throws ValidationException;
 
-    List<CardDTO> getAllTasks() throws Exception;
+    List<CardDTO> getAllCards() throws Exception;
 
-    CardDTO getTaskById(String id) throws Exception;
+    CardDTO getCardById(String id) throws Exception;
 
-    List<CardDTO> getTasksByTitle(String title) throws Exception;
+    List<CardDTO> getCardsByTitle(String title) throws Exception;
 
-    List<CardDTO> getTasksByUserId(String userId) throws Exception;
+    List<CardDTO> getCardsByUserId(String userId) throws Exception;
 
-    List<CardDTO> getTasksByPriority(String priority) throws Exception;
+    List<CardDTO> getCardsByPriority(String priority) throws Exception;
 
-    CardDTO updateTask(String id, CardDTO updatedTask) throws Exception;
+    CardDTO updateCard(String id, CardDTO updatedCard) throws Exception;
 
-    String deleteTask(String id) throws Exception;
+    String deleteCard(String id) throws Exception;
 }

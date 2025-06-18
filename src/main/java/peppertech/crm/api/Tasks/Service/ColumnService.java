@@ -7,32 +7,32 @@ import java.util.List;
 
 public class ColumnService implements ColumnServiceI {
     @Override
-    public ColumnDTO createPhase(ColumnDTO columnDTO) throws ValidationException {
+    public ColumnDTO createColumn(ColumnDTO columnDTO) throws ValidationException {
         return null;
     }
 
     @Override
-    public List<ColumnDTO> getAllPhases() throws Exception {
+    public List<ColumnDTO> getAllColumns() throws Exception {
         return List.of();
     }
 
     @Override
-    public ColumnDTO getPhaseById(String id) throws Exception {
+    public ColumnDTO getColumnById(String id) throws Exception {
         return null;
     }
 
     @Override
-    public List<ColumnDTO> getPhasesByName(String name) throws Exception {
+    public List<ColumnDTO> getColumnByName(String name) throws Exception {
         return List.of();
     }
 
     @Override
-    public ColumnDTO updatePhase(String id, ColumnDTO updatedPhase) throws Exception {
+    public ColumnDTO updateColumn(String id, ColumnDTO updatedPhase) throws Exception {
         return null;
     }
 
     @Override
-    public String deletePhase(String id) throws Exception {
+    public String deleteColumn(String id) throws Exception {
         return "";
     }
 }

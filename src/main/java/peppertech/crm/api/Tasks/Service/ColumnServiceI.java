@@ -6,15 +6,15 @@ import peppertech.crm.api.Tasks.Model.DTO.ColumnDTO;
 import java.util.List;
 
 public interface ColumnServiceI {
-    ColumnDTO createPhase(ColumnDTO columnDTO) throws ValidationException;
+    ColumnDTO createColumn(ColumnDTO columnDTO) throws ValidationException;
 
-    List<ColumnDTO> getAllPhases() throws Exception;
+    List<ColumnDTO> getAllColumns() throws Exception;
 
-    ColumnDTO getPhaseById(String id) throws Exception;
+    ColumnDTO getColumnById(String id) throws Exception;
 
-    List<ColumnDTO> getPhasesByName(String name) throws Exception;
+    List<ColumnDTO> getColumnByName(String name) throws Exception;
 
-    ColumnDTO updatePhase(String id, ColumnDTO updatedPhase) throws Exception;
+    ColumnDTO updateColumn(String id, ColumnDTO updatedPhase) throws Exception;
 
-    String deletePhase(String id) throws Exception;
+    String deleteColumn(String id) throws Exception;
 }
