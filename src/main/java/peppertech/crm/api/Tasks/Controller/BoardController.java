@@ -86,4 +86,43 @@ public class BoardController {
             return new ResponseEntity<>(new ErrorResponse("Error searching for boards. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
         }
     }
+
+    /**
+     * Elimina un tablero existente por su ID.
+     * <p>Este método permite eliminar un tablero de la base de datos utilizando su ID único.
+     * Si el tablero no se encuentra o si ocurre un error durante la eliminación, se devolverá un mensaje de error con el código HTTP 404.</p>
+     *
+     * @param id El identificador único del tablero que se desea eliminar. Este parámetro debe ser el ID del tablero a eliminar.
+     * @return Un objeto {@link ResponseEntity} con:
+     *         <ul>
+     *           <li>Un mensaje indicando el éxito de la eliminación con el código HTTP 200.</li>
+     *           <li>Un mensaje de error si no se pudo eliminar el tablero, con el código HTTP 404.</li>
+     *         </ul>
+     *
+     * <p><b>Respuestas posibles:</b></p>
+     * <ul>
+     *   <li><b>200 OK</b>: El tablero fue eliminado exitosamente.<br></li>
+     *   <li><b>404 Not Found</b>: No se encontró el tablero con el ID proporcionado o hubo un error al eliminarlo.<br></li>
+     * </ul>
+     */
+    @DeleteMapping("/Delete/{id}")
+    @Operation(summary = "Eliminar un tablero",
+            description = "Elimina un tablero existente utilizando su ID. "
+                    + "Si el tablero no existe o hay un error, se devolverá un error con código HTTP 404.",
+            responses = {
+                    @ApiResponse(description = "Tablero eliminado",
+                            responseCode = "200",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = peppertech.crm.api.Responses.DeleteResponse.class))),
+                    @ApiResponse(responseCode = "404",
+                            description = "No se pudo eliminar el tablero.",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            })
+    public ResponseEntity<?> deleteBoard(@Parameter(description = "ID único del tablero que se desea eliminar.", required = true) @PathVariable String id) {
+        try {
+            String result = serviceBoard.deleteBoard(id);
+            return new ResponseEntity<>(new peppertech.crm.api.Responses.DeleteResponse("Board with ID '" + id + "' was successfully deleted. " + result), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("Failed to delete board with ID '" + id + "'. " + e.getMessage(), HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+        }
+    }
 }

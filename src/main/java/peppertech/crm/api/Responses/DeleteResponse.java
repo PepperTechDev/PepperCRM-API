@@ -6,12 +6,12 @@ import lombok.Builder;
 
 @Builder
 @AllArgsConstructor
-@Schema(description = "Representa la respuesta después de una operación de eliminación exitosa.")
+@Schema(description = "Represents the response after a successful delete operation.")
 public class DeleteResponse {
 
     @Schema(
-            description = "Mensaje que indica el estado de la operación de eliminación.",
-            example = "El recurso ha sido eliminado exitosamente."
+            description = "Message indicating the status of the delete operation.",
+            example = "The resource has been successfully deleted."
     )
     public String message;
 }
