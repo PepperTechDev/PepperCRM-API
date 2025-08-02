@@ -1,6 +1,5 @@
 package peppertech.crm.api.Mails.Service;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +44,7 @@ public class EmailService implements EmailServiceI {
     public EmailDTO sendSimpleMail(EmailDTO emailDTO) throws ValidationException {
         return Optional.of(emailDTO)
                 .map(emailMapper::toEntity)
-                .map( emailDetails -> {
+                .map(emailDetails -> {
                     try {
                         SimpleMailMessage mailMessage = new SimpleMailMessage();
                         mailMessage.setFrom(sender);
@@ -83,7 +82,7 @@ public class EmailService implements EmailServiceI {
     public EmailDTO sendMailWithAttachment(EmailDTO emailDTO) {
         return Optional.of(emailDTO)
                 .map(emailMapper::toEntity)
-                .map( emailDetails -> {
+                .map(emailDetails -> {
                     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
                     MimeMessageHelper mimeMessageHelper;
                     try {

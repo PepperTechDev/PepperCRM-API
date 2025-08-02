@@ -7,7 +7,6 @@ import org.mapstruct.Named;
 import peppertech.crm.api.Mails.Model.DTO.EmailDTO;
 import peppertech.crm.api.Mails.Model.Entity.EmailDetails;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
