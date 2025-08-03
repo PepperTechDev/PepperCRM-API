@@ -14,12 +14,11 @@ import java.util.List;
 @Component
 public class CorsConfig implements CorsConfigurationSource {
 
-    @Value("${http.header.cors.allowedOrigins}")
-    private String allowedOrigins;
-
     private static final List<String> ALLOWED_METHODS = List.of("GET", "POST", "PUT", "DELETE", "PATCH");
     private static final List<String> ALLOWED_HEADERS = List.of("Content-Type", "Authorization", "X-Requested-With");
     private static final List<String> EXPOSED_HEADERS = List.of("Authorization", "X-Total-Count");
+    @Value("${http.header.cors.allowedOrigins}")
+    private String allowedOrigins;
 
     @Override
     public CorsConfiguration getCorsConfiguration(@NonNull HttpServletRequest request) {
